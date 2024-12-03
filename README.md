@@ -1,9 +1,48 @@
-# Effekt Template
+# EffektChess(puzzles)
 
-> [!WARNING]
-> This is a work-in-progress, feel free to contribute!
+The base idea is that I first find the best rated puzzles with popularity (Popularity is a number between 100 (best) and -100 (worst).). Then a random puzzle is chosen and build from the FEN notation. After that, the user sees the current check board via ASCII and can put in his move with algebraic notation. The move can be correct or incorrect, after a correct move the user sees the move from the opponent and the system repeats. After a wrong move, he can try again, maybe like 3 times or so.
 
-This template provides a starting point for Effekt projects.
+I did some research and found that Lichess shares their puzzles in a CSV file with the following structure: PuzzleId,**FEN**,**Moves**,_Rating_,_RatingDeviation_,**Popularity**,NbPlays,_Themes_,GameUrl,OpeningTags.
+
+While Bold stands for: **I need it for the base structure**
+and Italic stands for: _I could use it for extensions_.
+
+## must-have
+
+- Find a puzzle better than 90 and select one randomly.
+- Parse FEN Notation
+- Display Board as ASCII
+- User Input Validation (Accept user moves in algebraic notation)
+- Check if the user’s move matches the correct solution.
+- if yes: the opponent moves
+- if no: get 3 changses and lose.
+
+## can-have
+
+- Better way to see the current state of the board / better way to input his move.
+- Filter by Rating (difficulty) or themes (like opening, fork or mate in 2...)
+- Progression system: Like you start by only being able to do simple puzzles, if you solve 10 in a given time you unlock harder puzzles and so on.
+
+## Will-not-have
+
+- Online Multiplayer
+- AI Opponent
+- Advanced Chess Analytics/Feedback
+
+## Effects and handlers
+
+- Illegal/Wrong move
+- Corrupted puzzle data
+
+- Timers?
+
+## FFI and libraries
+
+- string
+- option
+- list
+- io (time, console)?
+- chesspuzzles from lichess
 
 ## Table of contents
 
@@ -35,7 +74,7 @@ After using this template, follow these steps to set up your project:
      in order to get weekly Pull Requests on Tuesday that update the Effekt version in CI.
    - See the [CI](#ci) section for more details
 
-3. Replace this `README` with your own!
+4. Replace this `README` with your own!
    - Please link back to this repo if you can :)
 
 ## Useful commands

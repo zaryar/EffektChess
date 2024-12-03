@@ -1,5 +1,91 @@
 module main // must be named same as the file! 
 
 import src/lib
+import string/tty
+import option
+import list
 
-def main(): Unit = println(helloWorld())
+
+
+// Types and Data Structures
+
+type Piece {
+  King(white: Bool)
+  Queen(white: Bool)
+  Rook(white: Bool)
+  Bishop(white: Bool)
+  Knight(white: Bool)
+  Pawn(white: Bool)
+}
+
+
+record Position(x: Int, y: Int)  // row, col
+
+record Move(from: Position, to: Position)
+
+record Board(cells: List[List[Option[Piece]]])
+
+record Puzzle(fen: String, moves: List[String], rating: Int)
+
+interface PuzzleGame {
+  def selectPuzzle(): Puzzle
+  def getMoveAttempt(): String
+  def fail(): Unit
+}
+
+
+// printing
+
+def pieceToChar(piece: Option[Piece]): String = piece match {
+  case None() => "."
+  case Some(King(true)) => "K"
+  case Some(Queen(true)) => "Q"
+  case Some(Rook(true)) => "R"
+  case Some(Bishop(true)) => "B"
+  case Some(Knight(true)) => "N"
+  case Some(Pawn(true)) => "P"
+  case Some(King(false)) => "k"
+  case Some(Queen(false)) => "q"
+  case Some(Rook(false)) => "r"
+  case Some(Bishop(false)) => "b"
+  case Some(Knight(false)) => "n"
+  case Some(Pawn(false)) => "p"
+}
+
+def printBoard(board: Board): Unit = {
+  println("    a b c d e f g h")
+  println("  ------------------")
+  val rows = board.cells.map { row =>
+    row.map { cell =>
+      pieceToChar(cell)
+    }.join(" ")
+  }
+  var counter = 1
+  rows.foreach { row =>
+    println(show(counter) ++ " | " ++ row)
+    counter = counter + 1
+  }
+}
+
+
+
+
+def main() = {
+  println(pieceToChar(Some(King(true))))
+
+val b = Board([
+  [Some(Rook(false)), Some(Knight(false)), Some(Bishop(false)), Some(Queen(false)), Some(King(false)), Some(Bishop(false)), Some(Knight(false)), Some(Rook(false))],
+  [Some(Pawn(false)), Some(Pawn(false)), Some(Pawn(false)), Some(Pawn(false)), Some(Pawn(false)), Some(Pawn(false)), Some(Pawn(false)), Some(Pawn(false))],
+  [None(), None(), None(), None(), None(), None(), None(), None()],
+  [None(), None(), None(), None(), None(), None(), None(), None()],
+  [None(), None(), None(), None(), None(), None(), None(), None()],
+  [None(), None(), None(), None(), None(), None(), None(), None()],
+  [Some(Pawn(true)), Some(Pawn(true)), Some(Pawn(true)), Some(Pawn(true)), Some(Pawn(true)), Some(Pawn(true)), Some(Pawn(true)), Some(Pawn(true))],
+  [Some(Rook(true)), Some(Knight(true)), Some(Bishop(true)), Some(Queen(true)), Some(King(true)), Some(Bishop(true)), Some(Knight(true)), Some(Rook(true))]
+])
+
+
+  printBoard(b)
+
+  
+}
