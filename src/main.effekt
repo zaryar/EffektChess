@@ -70,6 +70,8 @@ def printBoard(board: Board): Unit = {
 
 
 
+
+
 def main() = {
   println(pieceToChar(Some(King(true))))
 
