@@ -84,40 +84,18 @@ def processRank(rank: String): List[Option[Piece]] = {
       val emptyCount = c.toInt - '0'.toInt
       var i = 0
       while (i < emptyCount) {
-        result.append([None()])
+        result = Cons(None(), result)
         i = i + 1
       }
     } else {
       val piece = charToPiece(c)
-      result.append([Some(piece)]) 
+      result = Cons(Some(piece), result)
       ()
     }
   }
-  return result
+  return result.reverse()
 } 
 
-def processRankBUG(rank: String): List[String] = {
-  var result = [":)"]
-  val charList = toCharList(rank)
-  // Process each character
-  charList.foreach { c =>
-    if (c >= '1' && c <= '8') {
-      val emptyCount = c.toInt - '0'.toInt
-      var i = 0
-      while (i < emptyCount) {
-        result.append([":)"])
-        i = i + 1
-      }
-    } else {
-      val piece = charToPiece(c)
-      result.append([":("]) 
-      println("I should have appended :( but im buggy")
-      //println(result)
-    }
-  }
-
-  return result
-} 
 
 def fenToBoard(fen: String): Board = {
 
@@ -125,32 +103,33 @@ def fenToBoard(fen: String): Board = {
 
   val placement = fen.split(" ").get(0) //get moves
   val ranks = placement.split("/") // Split into ranks (rows)
-    
-  inspect(processRank(list::get(ranks, 0)))
-  //Board([processRank(list::get(ranks, 1))], [processRank(list::get(ranks, 2))], [processRank(list::get(ranks, 3))], [processRank(list::get(ranks, 4))], [processRank(list::get(ranks, 5))], [processRank(list::get(ranks, 6))], [processRank(list::get(ranks, 7))], [processRank(list::get(ranks, 8))])
+
+  Board([
+        processRank(list::get(ranks, 0)), 
+        processRank(list::get(ranks, 1)), 
+        processRank(list::get(ranks, 2)), 
+        processRank(list::get(ranks, 3)), 
+        processRank(list::get(ranks, 4)), 
+        processRank(list::get(ranks, 5)), 
+        processRank(list::get(ranks, 6)), 
+        processRank(list::get(ranks, 7))])
   //TODO WITH MAP?
-  Board([])
 }
 
 
 // printing
 
 
-def pieceToChar(piece: Option[Piece]): String = piece match {
-  case None() => "."
-  case Some(King(true)) => "K"
-  case Some(Queen(true)) => "Q"
-  case Some(Rook(true)) => "R"
-  case Some(Bishop(true)) => "B"
-  case Some(Knight(true)) => "N"
-  case Some(Pawn(true)) => "P"
-  case Some(King(false)) => "k"
-  case Some(Queen(false)) => "q"
-  case Some(Rook(false)) => "r"
-  case Some(Bishop(false)) => "b"
-  case Some(Knight(false)) => "n"
-  case Some(Pawn(false)) => "p"
-  //TODO throw error
+def pieceToSymbol(piece: Option[Piece]): String = {
+  piece match {
+    case None() => "."
+    case Some(King(white)) => if (white) "K" else "k"
+    case Some(Queen(white)) => if (white) "Q" else "q" 
+    case Some(Rook(white)) => if (white) "R" else "r"
+    case Some(Bishop(white)) => if (white) "B" else "b"
+    case Some(Knight(white)) => if (white) "N" else "n"
+    case Some(Pawn(white)) => if (white) "P" else "p"
+  }
 }
 
 def printBoard(board: Board): Unit = {
@@ -158,7 +137,7 @@ def printBoard(board: Board): Unit = {
   println("  ------------------")
   val rows = board.cells.map { row =>
     row.map { cell =>
-      pieceToChar(cell)
+      pieceToSymbol(cell)
     }.join(" ")
   }
   var counter = 1
@@ -167,6 +146,8 @@ def printBoard(board: Board): Unit = {
     counter = counter + 1
   }
 }
+
+
 
 /**
 def getRandomLine(str: String): List[Option[Int]] = {
@@ -202,11 +183,9 @@ def main() = {
   //val content = readFile("1.csv")
   //println(content.string::split("\n"))
    
-  //val b1 = fenToBoard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 12")
-  //printBoard(b1)
+  val b1 = fenToBoard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 12")
+  printBoard(b1)
 
-  inspect(processRankBUG("rnbqkbnr"))
-  inspect(["s"].append(["im sadly buggy"]))
   
 
 
@@ -227,7 +206,7 @@ def main() = {
   ])
 
 
-  //printBoard(b)
+  printBoard(b)
   println("end")
   
 }

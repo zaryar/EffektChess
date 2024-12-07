@@ -1,0 +1,8 @@
+PuzzleId,FEN,Moves,Rating,RatingDeviation,Popularity,NbPlays,Themes,GameUrl,OpeningTags
+0017R,r2qk2r/pp2ppbp/1n1p2p1/3Pn3/2P5/2NBBP1P/PP3P2/R2QK2R b KQkq - 0 12,e5c4 d3c4 b6c4 d1a4 d8d7 a4c4,1512,76,98,870,advantage fork long middlegame,https://lichess.org/ol84k0z4/black#24,Alekhine_Defense Alekhine_Defense_Other_variations
+001wR,6nr/pp3p1p/k1p5/8/1QN5/2P1P3/4KPqP/8 b - - 5 26,b7b5 b4a5 a6b7 c4d6 b7b8 a5d8,1191,75,98,1632,endgame long mate mateIn3,https://lichess.org/ruvbd9JW/black#52,
+002GQ,5rk1/5ppp/4p3/4N3/8/1Pn5/5PPP/5RK1 w - - 0 28,f1c1 c3e2 g1f1 e2c1,698,82,100,98,crushing endgame fork short,https://lichess.org/2K7g2pDT#55,
+002Uy,8/8/1p6/k7/P1R5/1K5r/8/8 w - - 26 64,c4c3 h3c3 b3c3 a5a4 c3b2 a4b4,1575,74,97,2104,crushing defensiveMove endgame long rookEndgame,https://lichess.org/sLU7YN1A#127,
+002vV,8/6k1/2R4p/5p1P/5P1K/6P1/8/r7 w - - 2 58,c6b6 a1h1,459,93,100,224,endgame master mate mateIn1 oneMove rookEndgame,https://lichess.org/KB7FAntf#115,
+0045Q,rnbqkb1r/pppp2pp/8/4P3/2B5/4p3/PPPP2PP/R1BQK1NR w KQkq - 0 7,d1f3 d8h4 e1d1 h4c4,1594,79,97,26281,advantage fork opening short,https://lichess.org/fTegzZIT#13,Vienna_Game Vienna_Game_Other_variations
+0048h,4r3/p5k1/2p2R1p/2Pp4/1P1pr1P1/P6P/8/3R3K w - - 1 35,f6c6 e4e1 d1e1 e8e1 h1g2 d4d3,1159,75,99,1085,crushing endgame exposedKing long rookEndgame,https://lichess.org/dq15P00L#69,
