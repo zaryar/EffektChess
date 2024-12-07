@@ -2,13 +2,34 @@ module main // must be named same as the file!
 
 import src/lib
 import string/tty
+import char
 import option
 import list
+import io/filesystem
+import string
+import io
+import io/error
+import exception
 
+def toCharList(str: String): List[Char] = {
+  def go(index: Int): List[Char] = {
+    with on[OutOfBounds].panic;
+    if (index >= str.length) {
+      []
+    } else {
+      val c = str.charAt(index)
+      Cons(c, go(index + 1))
+    }
+  }
+  go(0)
+}
+
+interface Yield[A] {
+  def yield(x: A): Unit
+}
 
 
 // Types and Data Structures
-
 type Piece {
   King(white: Bool)
   Queen(white: Bool)
@@ -34,7 +55,86 @@ interface PuzzleGame {
 }
 
 
+
+// FEN parsing
+def charToPiece(c: Char): Piece = {  
+  c match {    
+    case 'K' => King(true)
+    case 'Q' => Queen(true)
+    case 'R' => Rook(true)
+    case 'B' => Bishop(true)
+    case 'N' => Knight(true)
+    case 'P' => Pawn(true)
+    case 'k' => King(false)
+    case 'q' => Queen(false)
+    case 'r' => Rook(false)
+    case 'b' => Bishop(false)
+    case 'n' => Knight(false)
+    case 'p' => Pawn(false)
+    case _ => King(true) //TODO throw error
+  }
+}
+
+def processRank(rank: String): List[Option[Piece]] = {
+  var result = []
+  val charList = toCharList(rank)
+  // Process each character
+  charList.foreach { c =>
+    if (c >= '1' && c <= '8') {
+      val emptyCount = c.toInt - '0'.toInt
+      var i = 0
+      while (i < emptyCount) {
+        result.append([None()])
+        i = i + 1
+      }
+    } else {
+      val piece = charToPiece(c)
+      result.append([Some(piece)]) 
+      ()
+    }
+  }
+  return result
+} 
+
+def processRankBUG(rank: String): List[String] = {
+  var result = [":)"]
+  val charList = toCharList(rank)
+  // Process each character
+  charList.foreach { c =>
+    if (c >= '1' && c <= '8') {
+      val emptyCount = c.toInt - '0'.toInt
+      var i = 0
+      while (i < emptyCount) {
+        result.append([":)"])
+        i = i + 1
+      }
+    } else {
+      val piece = charToPiece(c)
+      result.append([":("]) 
+      println("I should have appended :( but im buggy")
+      //println(result)
+    }
+  }
+
+  return result
+} 
+
+def fenToBoard(fen: String): Board = {
+
+  with on[OutOfBounds].panic; //TODO NOT NICE
+
+  val placement = fen.split(" ").get(0) //get moves
+  val ranks = placement.split("/") // Split into ranks (rows)
+    
+  inspect(processRank(list::get(ranks, 0)))
+  //Board([processRank(list::get(ranks, 1))], [processRank(list::get(ranks, 2))], [processRank(list::get(ranks, 3))], [processRank(list::get(ranks, 4))], [processRank(list::get(ranks, 5))], [processRank(list::get(ranks, 6))], [processRank(list::get(ranks, 7))], [processRank(list::get(ranks, 8))])
+  //TODO WITH MAP?
+  Board([])
+}
+
+
 // printing
+
 
 def pieceToChar(piece: Option[Piece]): String = piece match {
   case None() => "."
@@ -50,6 +150,7 @@ def pieceToChar(piece: Option[Piece]): String = piece match {
   case Some(Bishop(false)) => "b"
   case Some(Knight(false)) => "n"
   case Some(Pawn(false)) => "p"
+  //TODO throw error
 }
 
 def printBoard(board: Board): Unit = {
@@ -67,27 +168,66 @@ def printBoard(board: Board): Unit = {
   }
 }
 
+/**
+def getRandomLine(str: String): List[Option[Int]] = {
+  // Split by both Windows and Unix line endings
+  val lines = str.string::split("\n")
+
+  if (lines.length == 0) {
+    return [None(), None(), None()]
+  }
+  
+  // Handle empty string case
+  // Get random index between 0 and lines.length - 1
+  val randomIndex = (random() * lines.length.toDouble).toInt
+  val randomIndex1 = (random() * lines.length.toDouble).toInt
+  val randomIndex2 = (random() * lines.length.toDouble).toInt
+  return [Some(randomIndex), Some(randomIndex1), Some(randomIndex2)]
+
+}**/
 
 
 
 
 
 def main() = {
-  println(pieceToChar(Some(King(true))))
 
-val b = Board([
-  [Some(Rook(false)), Some(Knight(false)), Some(Bishop(false)), Some(Queen(false)), Some(King(false)), Some(Bishop(false)), Some(Knight(false)), Some(Rook(false))],
-  [Some(Pawn(false)), Some(Pawn(false)), Some(Pawn(false)), Some(Pawn(false)), Some(Pawn(false)), Some(Pawn(false)), Some(Pawn(false)), Some(Pawn(false))],
-  [None(), None(), None(), None(), None(), None(), None(), None()],
-  [None(), None(), None(), None(), None(), None(), None(), None()],
-  [None(), None(), None(), None(), None(), None(), None(), None()],
-  [None(), None(), None(), None(), None(), None(), None(), None()],
-  [Some(Pawn(true)), Some(Pawn(true)), Some(Pawn(true)), Some(Pawn(true)), Some(Pawn(true)), Some(Pawn(true)), Some(Pawn(true)), Some(Pawn(true))],
-  [Some(Rook(true)), Some(Knight(true)), Some(Bishop(true)), Some(Queen(true)), Some(King(true)), Some(Bishop(true)), Some(Knight(true)), Some(Rook(true))]
-])
+  println("start")
 
 
-  printBoard(b)
+  with on[IOError].panic; 
+  
+  with filesystem;        
 
+  //val content = readFile("1.csv")
+  //println(content.string::split("\n"))
+   
+  //val b1 = fenToBoard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 12")
+  //printBoard(b1)
+
+  inspect(processRankBUG("rnbqkbnr"))
+  inspect(["s"].append(["im sadly buggy"]))
+  
+
+
+
+
+    
+ 
+
+  val b = Board([
+    [Some(Rook(false)), Some(Knight(false)), Some(Bishop(false)), Some(Queen(false)), Some(King(false)), Some(Bishop(false)), Some(Knight(false)), Some(Rook(false))],
+    [Some(Pawn(false)), Some(Pawn(false)), Some(Pawn(false)), Some(Pawn(false)), Some(Pawn(false)), Some(Pawn(false)), Some(Pawn(false)), Some(Pawn(false))],
+    [None(), None(), None(), None(), None(), None(), None(), None()],
+    [None(), None(), None(), None(), None(), None(), None(), None()],
+    [None(), None(), None(), None(), None(), None(), None(), None()],
+    [None(), None(), None(), None(), None(), None(), None(), None()],
+    [Some(Pawn(true)), Some(Pawn(true)), Some(Pawn(true)), Some(Pawn(true)), Some(Pawn(true)), Some(Pawn(true)), Some(Pawn(true)), Some(Pawn(true))],
+    [Some(Rook(true)), Some(Knight(true)), Some(Bishop(true)), Some(Queen(true)), Some(King(true)), Some(Bishop(true)), Some(Knight(true)), Some(Rook(true))]
+  ])
+
+
+  //printBoard(b)
+  println("end")
   
 }
