@@ -11,6 +11,10 @@ import io
 import io/error
 import exception
 
+// Helper functions
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+//convert string to list of characters
 def toCharList(str: String): List[Char] = {
   def go(index: Int): List[Char] = {
     with on[OutOfBounds].panic;
@@ -24,8 +28,25 @@ def toCharList(str: String): List[Char] = {
   go(0)
 }
 
-interface Yield[A] {
-  def yield(x: A): Unit
+// Convert file letter (a-h) to index (0-7)
+def fileToIndex(file: Char): Int = 
+  file.toInt - 'a'.toInt
+
+// Convert rank number (1-8) to index (0-7) 
+def rankToIndex(rank: Char): Int =
+  (rank.toInt - '0'.toInt) - 1
+
+/// Map a function `f` over elements in a given list, providing both the index and element.
+///
+/// O(N)
+def mapWithIndex[A, B](l: List[A]) { f: (Int, A) => B }: List[B] = {
+  var acc = Nil[B]()
+  var i = 0
+  l.foreach { el => 
+    acc = Cons(f(i, el), acc)
+    i = i + 1
+  }
+  acc.reverse
 }
 
 
@@ -39,21 +60,42 @@ type Piece {
   Pawn(white: Bool)
 }
 
-
-record Position(x: Int, y: Int)  // row, col
-
-record Move(from: Position, to: Position)
-
 record Board(cells: List[List[Option[Piece]]])
 
-record Puzzle(fen: String, moves: List[String], rating: Int)
+record Puzzle(fen: String, moves: List[String], board: Board)
 
-interface PuzzleGame {
-  def selectPuzzle(): Puzzle
-  def getMoveAttempt(): String
-  def fail(): Unit
+
+// Moving pieces
+//////////////////////////////////////////////////////////////////////////////////////////////////
+ 
+// Make a single move on the board
+def makeMove(board: Board, move: String): Board = {
+
+  with on[OutOfBounds].panic
+  // Convert algebraic notation
+  val fromFile = fileToIndex(move.charAt(0))
+  val fromRank = rankToIndex(move.charAt(1))
+  val toFile = fileToIndex(move.charAt(2))
+  val toRank = rankToIndex(move.charAt(3))
+
+  // Get the moving piece
+  val piece = list::get(list::get(board.cells, fromRank), fromFile)
+
+  // Create new board with updated positions
+  val newCells = board.cells.mapWithIndex { (r, rank) =>
+    rank.mapWithIndex { (f, square) =>
+      if (r == fromRank && f == fromFile) {
+        None() // Clear source square
+      } else if (r == toRank && f == toFile) {
+        piece // Place piece at destination
+      } else {
+        square
+      }
+    }
+  }
+  
+  Board(newCells)
 }
-
 
 
 // FEN parsing
@@ -145,6 +187,8 @@ def printBoard(board: Board): Unit = {
     println(show(counter) ++ " | " ++ row)
     counter = counter + 1
   }
+  println(" ")
+  println(" ")
 }
 
 
@@ -183,7 +227,9 @@ def main() = {
   //val content = readFile("1.csv")
   //println(content.string::split("\n"))
    
-  val b1 = fenToBoard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 12")
+  var b1 = fenToBoard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 12")
+  printBoard(b1)
+  b1 = makeMove(b1, "h8e5")
   printBoard(b1)
 
   
@@ -206,7 +252,7 @@ def main() = {
   ])
 
 
-  printBoard(b)
+  //printBoard(b)
   println("end")
   
 }
