@@ -35,7 +35,7 @@ def minimalWorkingProduct(puzzle: Puzzle): Unit = {
         board = makeMove(board, move)
       }
       else {
-        with on[OutOfBounds].panic
+        with on[OutOfBounds].panic  //is fine because moves are always 4 characters long
         println("Wrong move. You have one more chance.")
         println("Tipp: you have to move the piece on " ++ move.substring(0, 2))
         do writeLine("Enter a move: ") 

@@ -6,7 +6,7 @@ import src/utils
 import option
 
 def fenToColor(fen: String): Bool = {
-  with on[OutOfBounds].panic;
+  with on[OutOfBounds].panic; //is fine a fen always has > 2 parts
   
   val fields = fen.split(" ")
   val turn = list::get(fields, 1)
