@@ -8,7 +8,7 @@ record Board(cells: List[List[Option[Piece]]])
 
 def makeMove(board: Board, move: String): Board = {
 
-  with on[OutOfBounds].panic
+  with on[OutOfBounds].panic //is fine because moves are always 4 characters long
   // Convert algebraic notation
   val fromFile = fileToIndex(move.charAt(0))
   val fromRank = rankToIndex(move.charAt(1))

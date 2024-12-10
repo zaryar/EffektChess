@@ -12,7 +12,7 @@ def mapWithIndex[A, B](l: List[A]) { f: (Int, A) => B }: List[B] = {
 
 def toCharList(str: String): List[Char] = {
   def go(index: Int): List[Char] = {
-    with on[OutOfBounds].panic;
+    with on[OutOfBounds].panic; //is fine because were in a loop
     if (index >= str.length) {
       []
     } else {
