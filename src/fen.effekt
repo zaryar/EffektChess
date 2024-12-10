@@ -1,0 +1,73 @@
+module fen
+
+import src/board
+import src/pieces
+import src/utils
+import option
+
+def fenToColor(fen: String): Bool = {
+  with on[OutOfBounds].panic;
+  
+  val fields = fen.split(" ")
+  val turn = list::get(fields, 1)
+  
+  return turn == "w"
+}
+
+def fenToBoard(fen: String): Board = {
+
+  def charToPiece(c: Char): Piece = {  
+    c match {    
+      case 'K' => King(true)
+      case 'Q' => Queen(true)
+      case 'R' => Rook(true)
+      case 'B' => Bishop(true)
+      case 'N' => Knight(true)
+      case 'P' => Pawn(true)
+      case 'k' => King(false)
+      case 'q' => Queen(false)
+      case 'r' => Rook(false)
+      case 'b' => Bishop(false)
+      case 'n' => Knight(false)
+      case 'p' => Pawn(false)
+      case _ => King(true) //TODO throw error
+    }
+  }
+
+  def processRank(rank: String): List[Option[Piece]] = {
+    var result = []
+    val charList = toCharList(rank)
+    // Process each character
+    charList.foreach { c =>
+      if (c >= '1' && c <= '8') {
+        val emptyCount = c.toInt - '0'.toInt
+        var i = 0
+        while (i < emptyCount) {
+          result = Cons(None(), result)
+          i = i + 1
+        }
+      } else {
+        val piece = charToPiece(c)
+        result = Cons(Some(piece), result)
+        ()
+      }
+    }
+    return result.reverse()
+  } 
+
+  with on[OutOfBounds].panic; //TODO NOT NICE
+
+  val placement = fen.split(" ").get(0) //get moves
+  val ranks = placement.split("/") // Split into ranks (rows)
+
+  Board([
+        processRank(list::get(ranks, 0)), 
+        processRank(list::get(ranks, 1)), 
+        processRank(list::get(ranks, 2)), 
+        processRank(list::get(ranks, 3)), 
+        processRank(list::get(ranks, 4)), 
+        processRank(list::get(ranks, 5)), 
+        processRank(list::get(ranks, 6)), 
+        processRank(list::get(ranks, 7))])
+  //TODO WITH MAP?
+}

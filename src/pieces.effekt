@@ -1,0 +1,10 @@
+module pieces
+
+type Piece {
+  King(white: Bool)
+  Queen(white: Bool)
+  Rook(white: Bool)
+  Bishop(white: Bool)
+  Knight(white: Bool)
+  Pawn(white: Bool)
+}

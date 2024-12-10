@@ -1,0 +1,41 @@
+module board
+
+import src/pieces
+import option
+import src/utils
+
+record Board(cells: List[List[Option[Piece]]])
+
+def makeMove(board: Board, move: String): Board = {
+
+  with on[OutOfBounds].panic
+  // Convert algebraic notation
+  val fromFile = fileToIndex(move.charAt(0))
+  val fromRank = rankToIndex(move.charAt(1))
+  val toFile = fileToIndex(move.charAt(2))
+  val toRank = rankToIndex(move.charAt(3))
+
+  // Get the moving piece
+  val piece = list::get(list::get(board.cells, fromRank), fromFile)
+
+  // Create new board with updated positions
+  val newCells = board.cells.mapWithIndex { (r, rank) =>
+    rank.mapWithIndex { (f, square) =>
+      if (r == fromRank && f == fromFile) {
+        None() // Clear source square
+      } else if (r == toRank && f == toFile) {
+        piece // Place piece at destination
+      } else {
+        square
+      }
+    }
+  }
+  
+  Board(newCells)
+}
+
+def fileToIndex(file: Char): Int = 
+  file.toInt - 'a'.toInt
+
+def rankToIndex(rank: Char): Int =
+  8 - (rank.toInt - '0'.toInt)

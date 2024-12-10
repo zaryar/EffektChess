@@ -1,0 +1,61 @@
+module puzzle
+
+import src/board
+import src/pieces
+import src/display
+
+import io/console
+
+record Puzzle(
+  moves: List[String],
+  board: Board,
+  playWhite: Bool
+)
+
+def minimalWorkingProduct(puzzle: Puzzle): Unit = {
+  def toMove (white: Bool): String = {if (white) "(White)" else "(Black)"}
+
+  var board = puzzle.board
+  var whiteToMove = puzzle.playWhite
+  println("start ------------------------")
+  var turn = 0
+  printBoard(puzzle.board)
+  puzzle.moves.foreach { move =>
+    if (turn.mod(2) == 0) {
+      println("Enemies turn. " ++ toMove(whiteToMove) ++ " he moved: " ++ move)
+      board = makeMove(board, move)
+      printBoard(board)
+    } else {
+      println("Your turn. " ++ toMove(whiteToMove))
+      with console;
+      do writeLine("Enter a move: ") 
+      val input = do readLine()       
+      println("You entered: " ++ input)
+      if (input == move) {
+        board = makeMove(board, move)
+      }
+      else {
+        with on[OutOfBounds].panic
+        println("Wrong move. You have one more chance.")
+        println("Tipp: you have to move the piece on " ++ move.substring(0, 2))
+        do writeLine("Enter a move: ") 
+        val input = do readLine()       
+        println("You entered: " ++ input)
+        if (input == move) {
+          board = makeMove(board, move)
+        }
+        else {
+          println("You lost. The correct move was: " ++ move)
+          return
+          ()
+        }
+      }
+      printBoard(board)
+    }
+    whiteToMove = not(whiteToMove)
+    turn = turn + 1
+  }
+  println("You won!")
+  println("end   ------------------------")
+
+}

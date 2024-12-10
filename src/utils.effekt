@@ -1,0 +1,24 @@
+module utils
+
+def mapWithIndex[A, B](l: List[A]) { f: (Int, A) => B }: List[B] = {
+  var acc = Nil[B]()
+  var i = 0
+  l.foreach { el => 
+    acc = Cons(f(i, el), acc)
+    i = i + 1
+  }
+  acc.reverse
+}
+
+def toCharList(str: String): List[Char] = {
+  def go(index: Int): List[Char] = {
+    with on[OutOfBounds].panic;
+    if (index >= str.length) {
+      []
+    } else {
+      val c = str.charAt(index)
+      Cons(c, go(index + 1))
+    }
+  }
+  go(0)
+}
