@@ -1,0 +1,46 @@
+module csvmanager
+
+import io/filesystem
+import io/error
+import string
+import list
+import src/utils
+
+
+
+
+
+def getRandomPuzzle(path: String): (String, String) = {
+
+  with on[IOError].panic;
+  with on[OutOfBounds].panic;
+  
+
+  val fileContent = readFile(path)
+  // Read all lines and convert to list
+  val lines = fileContent.split("\n")
+  
+  // Skip header row and get random line
+  val puzzles = lines.drop(1)
+  val randomIndex = floor(random() * puzzles.size.toDouble) 
+  
+
+  val selectedLine = puzzles.get(randomIndex)
+  val fields = selectedLine.split(",")
+  (fields(1), fields(2)) // Return (FEN, Moves)
+
+}
+  
+
+def main() = {
+
+  //val (fen, moves) = getRandomPuzzle("puzzles.csv")
+  
+  //val puzzle = getRandomPuzzle("easy.csv")
+
+  //println(puzzle.first) 
+  //println(puzzle.second)
+
+
+  ()
+}
