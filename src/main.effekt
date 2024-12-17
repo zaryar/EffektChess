@@ -1,62 +1,93 @@
-module main // must be named same as the file! 
+module main
 
-import src/puzzle
-import src/fen
-import io/error
-import io/filesystem
 import src/csvmanager
+import src/puzzle
+import src/board
+import src/utils
+import io/console
+import src/fen
 
+record Progress(
+  solvedEasy: Int,
+  solvedMedium: Int,
+  solvedHard: Int
+)
 
+def isUnlocked(progress: Progress, difficulty: String): Bool = {
+  difficulty match {
+    case "easy" => true
+    case "medium" => progress.solvedEasy >= 10
+    case "hard" => progress.solvedMedium >= 10
+    case _ => false
+  }
+}
 
+def updateProgress(progress: Progress, difficulty: String): Progress = {
+  difficulty match {
+    case "easy" => Progress(progress.solvedEasy + 1, progress.solvedMedium, progress.solvedHard)
+    case "medium" => Progress(progress.solvedEasy, progress.solvedMedium + 1, progress.solvedHard)
+    case "hard" => Progress(progress.solvedEasy, progress.solvedMedium, progress.solvedHard + 1)
+    case _ => progress
+  }
+}
 
+def remainingPuzzles(progress: Progress, difficulty: String): Int = {
+  difficulty match {
+    case "medium" => 10 - progress.solvedEasy
+    case "hard" => 10 - progress.solvedMedium
+    case _ => 0
+  }
+}
 
-/**
-def getRandomLine(str: String): List[Option[Int]] = {
-  // Split by both Windows and Unix line endings
-  val lines = str.string::split("\n")
-
-  if (lines.length == 0) {
-    return [None(), None(), None()]
+def showDifficultyMenu(progress: Progress): String = {
+  val red = "\u001b[31m"
+  val green = "\u001b[32m"
+  val reset = "\u001b[0m"
+  
+  println("Choose your difficulty:")
+  println(green ++ "1 - easy" ++ reset)
+  
+  // For medium, show remaining easy puzzles needed
+  if (isUnlocked(progress, "medium")) {
+    println(green ++ "2 - medium" ++ reset)
+  } else {
+    println(red ++ "2 - medium (solve " ++ show(remainingPuzzles(progress, "medium")) ++ " easy puzzles)" ++ reset)
   }
   
-  // Handle empty string case
-  // Get random index between 0 and lines.length - 1
-  val randomIndex = (random() * lines.length.toDouble).toInt
-  val randomIndex1 = (random() * lines.length.toDouble).toInt
-  val randomIndex2 = (random() * lines.length.toDouble).toInt
-  return [Some(randomIndex), Some(randomIndex1), Some(randomIndex2)]
-
-}**/
-
-
-
-
+  // For hard, show remaining medium puzzles needed
+  if (isUnlocked(progress, "hard")) {
+    println(green ++ "3 - hard" ++ reset)
+  } else {
+    println(red ++ "3 - hard (solve " ++ show(remainingPuzzles(progress, "hard")) ++ " medium puzzles)" ++ reset)
+  }
+  
+  with console;
+  do readLine()
+}
 
 def main() = {
-
-  println("start◻️")
-
-
-  with on[IOError].panic; 
+  var currentProgress = Progress(0, 0, 0)
+  var puzzlesSolved = 0
   
-  with filesystem;        
-
-  //val content = readFile("1.csv")
-  //println(content.string::split("\n"))
-   
-  //var b1 = fenToBoard("2r3kR/Q7/5q2/1brpN3/5Pp1/4P1P1/6K1/1B6 b KQkq - 0 12")
-  // b - - 2 43,f6h8 a7f7
-  //printBoard(b1)
-  //b1 = makeMove(b1, "f6h8")
-  //printBoard(b1)
-  val puzzle = getRandomPuzzle("easy.csv")
-  var p = Puzzle(puzzle.second, fenToBoard(puzzle.first), fenToColor(puzzle.first))
-  minimalWorkingProduct(p)
-  //var b1 = fenToBoard("8/8/8/8/8/8/8/8 b - - 2 43")
-  //var b2 = fenToBoard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
-  //printBoard(b2)
-  
-
-  println("end")
-  
+  while(true) {
+    
+      val choice = showDifficultyMenu(currentProgress)
+      val (file, difficulty) = choice match {
+        case "1" => if (isUnlocked(currentProgress, "easy")) ("easy.csv", "easy") else ("", "")
+        case "2" => if (isUnlocked(currentProgress, "medium")) ("medium.csv", "medium") else ("", "")
+        case "3" => if (isUnlocked(currentProgress, "hard")) ("hard.csv", "hard") else ("", "")
+        case _ => ("", "")
+      }
+      
+      if (file != "") {
+        val puzzle = getRandomPuzzle(file)
+        var p = Puzzle(puzzle.second, fenToBoard(puzzle.first), fenToColor(puzzle.first))
+        if (puzzle::minimalWorkingProduct(p)) {
+          println("You solved the puzzle!")
+          currentProgress = updateProgress(currentProgress, difficulty)
+          puzzlesSolved = puzzlesSolved + 1
+        }
+      }
+    
+  }
 }

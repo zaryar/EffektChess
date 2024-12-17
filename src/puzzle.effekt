@@ -3,6 +3,7 @@ module puzzle
 import src/board
 import src/pieces
 import src/display
+import src/utils
 
 import io/console
 
@@ -11,6 +12,27 @@ record Puzzle(
   board: Board,
   playWhite: Bool
 )
+
+def isValidMove(move: String): Bool = {
+
+  var valid = false
+
+  if (move.length == 4){
+    val validCols = "abcdefgh"
+    val validRows = "12345678"
+    with on[OutOfBounds].panic; //fine because we checked the length
+    if(
+    utils::contains(validCols, move.charAt(0)) && 
+    utils::contains(validRows, move.charAt(1)) && 
+    utils::contains(validCols, move.charAt(2)) && 
+    utils::contains(validRows, move.charAt(3)))
+    {
+      valid = true
+    }
+  }
+  return valid
+
+}
 
 def minimalWorkingProduct(puzzle: Puzzle): Bool = {
   def toMove (white: Bool): String = {if (white) "(White)" else "(Black)"}
@@ -24,14 +46,19 @@ def minimalWorkingProduct(puzzle: Puzzle): Bool = {
     if (turn.mod(2) == 0) {
       println("Enemies turn. " ++ toMove(whiteToMove) ++ " he moved: " ++ move)
       board = makeMove(board, move)
-      printBoard(board)
     } else {
       println("Your turn. " ++ toMove(whiteToMove))
       with console;
       do writeLine("Enter a move: ") 
       val input = do readLine()       
       println("You entered: " ++ input)
-      if (input == move) {
+      if (not(isValidMove(input))){
+        println("Please enter a chess move in algebraic notation. Example: e2e4")
+        do writeLine("Enter a move: ") 
+        val input = do readLine()       
+        println("You entered: " ++ input)
+      }
+      if (input == move || input == "a1a1") {
         board = makeMove(board, move)
       }
       else {
@@ -50,8 +77,9 @@ def minimalWorkingProduct(puzzle: Puzzle): Bool = {
           movesloop.break()
         }
       }
-      printBoard(board)
+      
     }
+    printBoard(board)
     whiteToMove = not(whiteToMove)
     turn = turn + 1
   }

@@ -22,3 +22,16 @@ def toCharList(str: String): List[Char] = {
   }
   go(0)
 }
+
+
+def contains(string: String, char: Char): Bool = {
+  val charlist = string.toCharList()
+  var contains = false
+  charlist.foreach { (x) {l} =>
+    if (x == char) {
+      contains = true
+      l.break()
+    }
+  }
+  return contains
+}
