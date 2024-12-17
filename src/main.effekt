@@ -4,6 +4,7 @@ import src/puzzle
 import src/fen
 import io/error
 import io/filesystem
+import src/csvmanager
 
 
 
@@ -48,7 +49,8 @@ def main() = {
   //printBoard(b1)
   //b1 = makeMove(b1, "f6h8")
   //printBoard(b1)
-  var p = Puzzle(["f6h8", "a7f7"], fenToBoard("2r3kR/Q7/5q2/1brpN3/5Pp1/4P1P1/6K1/1B6 b - - 2 43"), fenToColor("2r3kR/Q7/5q2/1brpN3/5Pp1/4P1P1/6K1/1B6 b - - 2 43"))
+  val puzzle = getRandomPuzzle("easy.csv")
+  var p = Puzzle(puzzle.second, fenToBoard(puzzle.first), fenToColor(puzzle.first))
   minimalWorkingProduct(p)
   //var b1 = fenToBoard("8/8/8/8/8/8/8/8 b - - 2 43")
   //var b2 = fenToBoard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")

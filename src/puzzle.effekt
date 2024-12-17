@@ -12,15 +12,15 @@ record Puzzle(
   playWhite: Bool
 )
 
-def minimalWorkingProduct(puzzle: Puzzle): Unit = {
+def minimalWorkingProduct(puzzle: Puzzle): Bool = {
   def toMove (white: Bool): String = {if (white) "(White)" else "(Black)"}
-
+  var lost = false
   var board = puzzle.board
   var whiteToMove = puzzle.playWhite
   println("start ------------------------")
   var turn = 0
   printBoard(puzzle.board)
-  puzzle.moves.foreach { move =>
+  puzzle.moves.foreach { (move) {movesloop}=>
     if (turn.mod(2) == 0) {
       println("Enemies turn. " ++ toMove(whiteToMove) ++ " he moved: " ++ move)
       board = makeMove(board, move)
@@ -46,8 +46,8 @@ def minimalWorkingProduct(puzzle: Puzzle): Unit = {
         }
         else {
           println("You lost. The correct move was: " ++ move)
-          return
-          ()
+          lost = true
+          movesloop.break()
         }
       }
       printBoard(board)
@@ -55,7 +55,13 @@ def minimalWorkingProduct(puzzle: Puzzle): Unit = {
     whiteToMove = not(whiteToMove)
     turn = turn + 1
   }
-  println("You won!")
-  println("end   ------------------------")
+  if (not(lost)){
+    println("You won!")
+    return true
+  }
+  else {
+    return false
+  }
+  
 
 }

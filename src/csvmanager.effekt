@@ -10,7 +10,7 @@ import src/utils
 
 
 
-def getRandomPuzzle(path: String): (String, String) = {
+def getRandomPuzzle(path: String): (String, List[String]) = {
 
   with on[IOError].panic;
   with on[OutOfBounds].panic;
@@ -23,11 +23,16 @@ def getRandomPuzzle(path: String): (String, String) = {
   // Skip header row and get random line
   val puzzles = lines.drop(1)
   val randomIndex = floor(random() * puzzles.size.toDouble) 
-  
 
   val selectedLine = puzzles.get(randomIndex)
   val fields = selectedLine.split(",")
-  (fields(1), fields(2)) // Return (FEN, Moves)
+
+  // Split moves string into array and convert to list
+  val movesString = fields.get(2)
+  val movesArray = movesString.split(" ") 
+  
+  
+  (fields.get(1), movesArray) // Return (FEN, Moves)
 
 }
   
@@ -36,10 +41,10 @@ def main() = {
 
   //val (fen, moves) = getRandomPuzzle("puzzles.csv")
   
-  //val puzzle = getRandomPuzzle("easy.csv")
+  val puzzle = getRandomPuzzle("easy.csv")
 
-  //println(puzzle.first) 
-  //println(puzzle.second)
+  println(puzzle.first) 
+  println(puzzle.second)
 
 
   ()
