@@ -7,11 +7,19 @@ import src/utils
 
 import io/console
 
+// ANSI color codes
+val bold = "\u001b[1m"
+val green = "\u001b[32m"
+val red = "\u001b[31m"
+val reset = "\u001b[0m"
+
 record Puzzle(
   moves: List[String],
   board: Board,
   playWhite: Bool
 )
+
+def separator() = "----------------------------------------"
 
 def isValidMove(move: String): Bool = {
 
@@ -35,60 +43,74 @@ def isValidMove(move: String): Bool = {
 }
 
 def minimalWorkingProduct(puzzle: Puzzle): Bool = {
-  def toMove (white: Bool): String = {if (white) "(White)" else "(Black)"}
+  def toMove(white: Bool): String = {
+    if (white) bold ++ "(White)" ++ reset 
+    else bold ++ "(Black)" ++ reset
+  }
+
   var lost = false
   var board = puzzle.board
   var whiteToMove = puzzle.playWhite
-  println("start ------------------------")
+
+  println(separator())
+  println(bold ++ "Chess Puzzle Challenge" ++ reset)
+  println(separator())
+
   var turn = 0
-  printBoard(puzzle.board)
+  printBoard(puzzle.board, puzzle.playWhite)
+
   puzzle.moves.foreach { (move) {movesloop}=>
     if (turn.mod(2) == 0) {
-      println("Enemies turn. " ++ toMove(whiteToMove) ++ " he moved: " ++ move)
+      println(bold ++ "Move " ++ show(turn + 1) ++ reset ++ " - Enemy " ++ toMove(whiteToMove))
+      println(green ++ "→ " ++ reset ++ move)
       board = makeMove(board, move)
+
     } else {
-      println("Your turn. " ++ toMove(whiteToMove))
+      println(bold ++ "Move " ++ show(turn + 1) ++ reset ++ " - Your Turn " ++ toMove(whiteToMove))
       with console;
-      do writeLine("Enter a move: ") 
-      val input = do readLine()       
-      println("You entered: " ++ input)
+      do writeLine(green ++ "Enter move: " ++ reset)
+      val input = do readLine()      
+
       if (not(isValidMove(input))){
-        println("Please enter a chess move in algebraic notation. Example: e2e4")
-        do writeLine("Enter a move: ") 
-        val input = do readLine()       
-        println("You entered: " ++ input)
+        println(red ++ "Invalid format! Use algebraic notation (e.g. e2e4)" ++ reset)
+        do writeLine(green ++ "Try again: " ++ reset)
+        val input = do readLine()  
+        ()
       }
       if (input == move || input == "a1a1") {
+        println(green ++ "little cheater" ++ reset)
         board = makeMove(board, move)
       }
       else {
+        
+        println(red ++ "Wrong move. One more chance!" ++ reset)
         with on[OutOfBounds].panic  //is fine because moves are always 4 characters long
-        println("Wrong move. You have one more chance.")
-        println("Tipp: you have to move the piece on " ++ move.substring(0, 2))
-        do writeLine("Enter a move: ") 
+        println(bold ++ "Hint: Move piece at " ++ green ++ move.substring(0, 2) ++ reset)
+        do writeLine(green ++ "Enter move: " ++ reset)
         val input = do readLine()       
-        println("You entered: " ++ input)
+
         if (input == move) {
+          println(green ++ "✓ Correct!" ++ reset)
           board = makeMove(board, move)
-        }
-        else {
-          println("You lost. The correct move was: " ++ move)
+        } else {
+          println(red ++ "✗ Wrong! The correct move was: " ++ bold ++ move ++ reset)
           lost = true
           movesloop.break()
         }
       }
       
     }
-    printBoard(board)
+    printBoard(board, puzzle.playWhite)
     whiteToMove = not(whiteToMove)
     turn = turn + 1
   }
-  if (not(lost)){
-    println("You won!")
-    return true
-  }
-  else {
-    return false
+  println(separator())
+  if (not(lost)) {
+    println(green ++ "🏆 Congratulations! Puzzle solved!" ++ reset)
+    true
+  } else {
+    println(red ++ "Better luck next time!" ++ reset)
+    false
   }
   
 

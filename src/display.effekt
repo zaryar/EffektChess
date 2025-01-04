@@ -6,7 +6,7 @@ import src/pieces
 val whiteBg = "◻️"
 val blackBg = "◼️"
 
-def printBoard(board: Board): Unit = {
+def printBoard(board: Board, whiteView: Bool): Unit = {
   var linebreak = 0
   var isWhite = false;
   val tblack = "\u001b[34m"    // Black text
@@ -28,18 +28,29 @@ def printBoard(board: Board): Unit = {
       case Some(Pawn(white)) => if (white) twhite ++ "♙" ++ reset else tblack ++ "♙" ++ reset
     }
   }
-  println("     a b c d e f g h")
+  println("     " ++ (if (not(whiteView)) "a b c d e f g h" else "h g f e d c b a"))
   println("  ------------------")
-  val rows = board.cells.map { row =>
-    row.map { cell =>
-      pieceToSymbol(cell)
-      
-    }.join(" ")
-  }
-  var counter = 8
-  rows.foreach { row =>
-    println(show(counter) ++ " | " ++ row)
-    counter = counter - 1
+
+  var counter = if (not(whiteView)) 8 else 1
+  
+  if (not(whiteView)) {
+    board.cells.foreach { row => 
+      var rowString = show(counter) ++ " | "
+      row.foreach { piece => 
+        rowString = rowString ++ pieceToSymbol(piece) ++ " "
+      }
+      println(rowString)
+      counter = counter - 1
+    }
+  } else {
+    board.cells.reverse.foreach { row =>
+      var rowString = show(counter) ++ " | "
+      row.reverse.foreach { piece => 
+        rowString = rowString ++ pieceToSymbol(piece) ++ " "
+      }
+      println(rowString)
+      counter = counter + 1
+    }
   }
   println(" ")
 }

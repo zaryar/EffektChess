@@ -4,6 +4,9 @@ import src/board
 import src/pieces
 import src/utils
 import option
+import exception
+
+
 
 def fenToColor(fen: String): Bool = {
   with on[OutOfBounds].panic; //is fine a fen always has > 2 parts
@@ -16,7 +19,7 @@ def fenToColor(fen: String): Bool = {
 
 def fenToBoard(fen: String): Board = {
 
-  def charToPiece(c: Char): Piece = {  
+  def charToPiece(c: Char): Piece / Exception[WrongFormat] = {  
     c match {    
       case 'K' => King(true)
       case 'Q' => Queen(true)
@@ -30,7 +33,7 @@ def fenToBoard(fen: String): Board = {
       case 'b' => Bishop(false)
       case 'n' => Knight(false)
       case 'p' => Pawn(false)
-      case _ => King(true) //TODO throw error
+      case invalid => wrongFormat("Invalid piece character in FEN: " ++ show(invalid))
     }
   }
 
@@ -47,7 +50,12 @@ def fenToBoard(fen: String): Board = {
           i = i + 1
         }
       } else {
-        val piece = charToPiece(c)
+        val piece = 
+        try { 
+          charToPiece(c) 
+        } with Exception[WrongFormat] { 
+          def raise(e, msg) = panic(msg) 
+        }
         result = Cons(Some(piece), result)
         ()
       }
@@ -69,5 +77,4 @@ def fenToBoard(fen: String): Board = {
         processRank(list::get(ranks, 5)), 
         processRank(list::get(ranks, 6)), 
         processRank(list::get(ranks, 7))])
-  //TODO WITH MAP?
 }
