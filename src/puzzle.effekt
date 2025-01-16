@@ -42,7 +42,7 @@ def isValidMove(move: String): Bool = {
 
 }
 
-def minimalWorkingProduct(puzzle: Puzzle): Bool = {
+def playPuzzle(puzzle: Puzzle): Bool = {
   def toMove(white: Bool): String = {
     if (white) bold ++ "(White)" ++ reset 
     else bold ++ "(Black)" ++ reset
@@ -53,7 +53,7 @@ def minimalWorkingProduct(puzzle: Puzzle): Bool = {
   var whiteToMove = puzzle.playWhite
 
   println(separator())
-  println(bold ++ "Chess Puzzle Challenge" ++ reset)
+  println(bold ++ "Chess Puzzle" ++ reset)
   println(separator())
 
   var turn = 0

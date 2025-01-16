@@ -82,7 +82,7 @@ def main() = {
       if (file != "") {
         val puzzle = getRandomPuzzle(file)
         var p = Puzzle(puzzle.second, fenToBoard(puzzle.first), fenToColor(puzzle.first))
-        if (puzzle::minimalWorkingProduct(p)) {
+        if (puzzle::playPuzzle(p)) {
           println("You solved the puzzle!")
           currentProgress = updateProgress(currentProgress, difficulty)
           puzzlesSolved = puzzlesSolved + 1

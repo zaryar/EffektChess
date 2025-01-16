@@ -17,7 +17,6 @@ def getRandomPuzzle(path: String): (String, List[String]) = {
   
 
   val fileContent = readFile(path)
-  // Read all lines and convert to list
   val lines = fileContent.split("\n")
   
   // Skip header row and get random line
@@ -27,7 +26,6 @@ def getRandomPuzzle(path: String): (String, List[String]) = {
   val selectedLine = puzzles.get(randomIndex)
   val fields = selectedLine.split(",")
 
-  // Split moves string into array and convert to list
   val movesString = fields.get(2)
   val movesArray = movesString.split(" ") 
   
@@ -37,15 +35,3 @@ def getRandomPuzzle(path: String): (String, List[String]) = {
 }
   
 
-def main() = {
-
-  //val (fen, moves) = getRandomPuzzle("puzzles.csv")
-  
-  val puzzle = getRandomPuzzle("easy.csv")
-
-  println(puzzle.first) 
-  println(puzzle.second)
-
-
-  ()
-}
