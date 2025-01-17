@@ -26,7 +26,7 @@ def printBoard(board: Board, whiteView: Bool, sourceTile: String): Unit = {
     val bgColor = if (pos == sourceTile) true else false
 
     piece match {
-      case None() => if (bgColor) {"\u001b[32m" ++ "\u001B[1m" ++ "★" ++ "\u001b[0m"} else if (isWhite) { whiteBg ++ reset} else {blackBg ++ reset}
+      case None() => if (bgColor) {"\u001b[32m" ++ "\u001B[1m" ++ "♡" ++ "\u001b[0m"} else if (isWhite) { whiteBg ++ reset} else {blackBg ++ reset}
       case Some(King(white)) => if (white) twhite ++ "♔" ++ reset else tblack ++ "♔" ++ reset
       case Some(Queen(white)) => if (white) twhite ++ "♕" ++ reset else tblack ++ "♕" ++ reset
       case Some(Rook(white)) => if (white) twhite ++ "♖" ++ reset else tblack ++ "♖" ++ reset
