@@ -57,7 +57,7 @@ def playPuzzle(puzzle: Puzzle): Bool = {
   println(separator())
 
   var turn = 0
-  printBoard(puzzle.board, puzzle.playWhite)
+  printBoard(puzzle.board, puzzle.playWhite, "0")
 
   puzzle.moves.foreach { (move) {movesloop}=>
     if (turn.mod(2) == 0) {
@@ -100,7 +100,7 @@ def playPuzzle(puzzle: Puzzle): Bool = {
       }
       
     }
-    printBoard(board, puzzle.playWhite)
+    printBoard(board, puzzle.playWhite, move.substring(0,2) )
     whiteToMove = not(whiteToMove)
     turn = turn + 1
   }

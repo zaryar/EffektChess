@@ -6,12 +6,9 @@ import src/board
 import src/utils
 import io/console
 import src/fen
+import src/progress
 
-record Progress(
-  solvedEasy: Int,
-  solvedMedium: Int,
-  solvedHard: Int
-)
+
 
 def isUnlocked(progress: Progress, difficulty: String): Bool = {
   difficulty match {
@@ -66,7 +63,7 @@ def showDifficultyMenu(progress: Progress): String = {
 }
 
 def main() = {
-  var currentProgress = Progress(0, 0, 0)
+  var currentProgress = readProgress()
   var puzzlesSolved = 0
   
   while(true) {
@@ -85,6 +82,7 @@ def main() = {
         if (puzzle::playPuzzle(p)) {
           println("You solved the puzzle!")
           currentProgress = updateProgress(currentProgress, difficulty)
+          saveProgress(currentProgress)
           puzzlesSolved = puzzlesSolved + 1
         }
       }

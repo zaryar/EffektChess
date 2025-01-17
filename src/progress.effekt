@@ -1,0 +1,36 @@
+module progress
+
+import io/filesystem
+import io/error
+import string
+
+record Progress(
+  solvedEasy: Int,
+  solvedMedium: Int,
+  solvedHard: Int
+)
+
+def readProgress(): Progress = {
+  
+  with on[IOError].default { Progress(0, 0, 0) } ;
+  val content = readFile("easy.csv")
+  Progress(0, 0, 0)
+  /*
+  val lines = content.split("\n")
+  with on[OutOfBounds].default { Progress(0, 0, 0) };
+  Progress(
+    lines.get(0).toInt, 
+    lines.get(1).toInt, 
+    lines.get(2).toInt 
+  )*/
+}
+
+def saveProgress(progress: Progress): Unit = {
+  ()
+  /*
+  with on[IOError].panic;
+  val content = show(progress.solvedEasy) ++ "\n" ++ 
+                show(progress.solvedMedium) ++ "\n" ++ 
+                show(progress.solvedHard)
+  writeFile("progress.ini", content)*/
+}
