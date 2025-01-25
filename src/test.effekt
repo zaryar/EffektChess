@@ -5,6 +5,9 @@ import src/lib
 import src/board
 import src/pieces
 import src/fen
+import io/filesystem
+import src/csvmanager
+import string
 
 def main() = mainSuite("chess moves") {
   with on[OutOfBounds].panic;
@@ -28,4 +31,5 @@ def main() = mainSuite("chess moves") {
       Some(Rook(true))
     )
   }
+
 }

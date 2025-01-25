@@ -16,7 +16,8 @@ val reset = "\u001b[0m"
 record Puzzle(
   moves: List[String],
   board: Board,
-  playWhite: Bool
+  playWhite: Bool,
+  hardcore: Bool
 )
 
 def separator() = "----------------------------------------"
@@ -82,7 +83,11 @@ def playPuzzle(puzzle: Puzzle): Bool = {
         board = makeMove(board, move)
       }
       else {
-        
+        if (puzzle.hardcore) {
+          println(red ++ "✗ Wrong! The correct move was: " ++ bold ++ move ++ reset)
+          lost = true
+          movesloop.break()}
+        else {
         println(red ++ "Wrong move. One more chance!" ++ reset)
         with on[OutOfBounds].panic  //is fine because moves are always 4 characters long
         println(bold ++ "Hint: Move piece at " ++ green ++ move.substring(0, 2) ++ reset)
@@ -97,7 +102,7 @@ def playPuzzle(puzzle: Puzzle): Bool = {
           lost = true
           movesloop.break()
         }
-      }
+      }}
       
     }
     printBoard(board, puzzle.playWhite, move.substring(0,2) )
