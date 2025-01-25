@@ -2,9 +2,30 @@ module src/test
 
 import test
 import src/lib
+import src/board
+import src/pieces
+import src/fen
 
-def main() = mainSuite("lib") {
+def main() = mainSuite("chess moves") {
+  with on[OutOfBounds].panic;
   test("Hello world") {
     assertEqual(helloWorld(), "Hello, world!")
+  }
+
+  test("White kingside castling") {
+    val initialFen = "4k3/8/8/8/8/8/8/4K2R w e1g1 - 0 1"
+    val board = fenToBoard(initialFen)
+    
+    // Make castling move
+    val newBoard = makeMove(board, "e1g1")
+    
+    assertEqual(
+      list::get(list::get(newBoard.cells, 7), 6), 
+      Some(King(true))
+    )
+    assertEqual(
+      list::get(list::get(newBoard.cells, 7), 5), 
+      Some(Rook(true))
+    )
   }
 }

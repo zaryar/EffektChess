@@ -21,12 +21,9 @@ def printBoard(board: Board, whiteView: Bool, sourceTile: String): Unit = {
     isWhite = not(isWhite)
 
     var bg = if (isWhite) bgWhite else bgBlack
-    if (sourceTile == pos) {
-      bg = bg ++ "\u001b[4m"
-    }
 
     piece match {
-      case None() => bg ++ "   " ++ reset
+      case None() => if (sourceTile == pos) (bg ++ "\u001b[32m" ++ " . " ++ reset) else (bg ++ "   " ++ reset)
       case Some(King(white)) => bg ++ (if (white) twhite else tblack) ++ " ♚ " ++ reset
       case Some(Queen(white)) => bg ++ (if (white) twhite else tblack) ++ " ♛ " ++ reset
       case Some(Rook(white)) => bg ++ (if (white) twhite else tblack) ++ " ♜ " ++ reset

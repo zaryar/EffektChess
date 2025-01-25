@@ -10,57 +10,7 @@ import src/progress
 
 
 
-def isUnlocked(progress: Progress, difficulty: String): Bool = {
-  difficulty match {
-    case "easy" => true
-    case "medium" => progress.solvedEasy >= 10
-    case "hard" => progress.solvedMedium >= 10
-    case _ => false
-  }
-}
 
-def updateProgress(progress: Progress, difficulty: String): Progress = {
-  difficulty match {
-    case "easy" => Progress(progress.solvedEasy + 1, progress.solvedMedium, progress.solvedHard)
-    case "medium" => Progress(progress.solvedEasy, progress.solvedMedium + 1, progress.solvedHard)
-    case "hard" => Progress(progress.solvedEasy, progress.solvedMedium, progress.solvedHard + 1)
-    case _ => progress
-  }
-}
-
-def remainingPuzzles(progress: Progress, difficulty: String): Int = {
-  difficulty match {
-    case "medium" => 10 - progress.solvedEasy
-    case "hard" => 10 - progress.solvedMedium
-    case _ => 0
-  }
-}
-
-def showDifficultyMenu(progress: Progress): String = {
-  val red = "\u001b[31m"
-  val green = "\u001b[32m"
-  val reset = "\u001b[0m"
-  
-  println("Choose your difficulty:")
-  println(green ++ "1 - easy" ++ reset)
-  
-  // For medium, show remaining easy puzzles needed
-  if (isUnlocked(progress, "medium")) {
-    println(green ++ "2 - medium" ++ reset)
-  } else {
-    println(red ++ "2 - medium (solve " ++ show(remainingPuzzles(progress, "medium")) ++ " easy puzzles)" ++ reset)
-  }
-  
-  // For hard, show remaining medium puzzles needed
-  if (isUnlocked(progress, "hard")) {
-    println(green ++ "3 - hard" ++ reset)
-  } else {
-    println(red ++ "3 - hard (solve " ++ show(remainingPuzzles(progress, "hard")) ++ " medium puzzles)" ++ reset)
-  }
-  
-  with console;
-  do readLine()
-}
 
 def main() = {
   var currentProgress = readProgress()
