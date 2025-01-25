@@ -6,25 +6,97 @@ import src/utils
 
 record Board(cells: List[List[Option[Piece]]])
 
-def makeMove(board: Board, move: String): Board = {
+def isCastling(board: Board, move: String): Bool = {
+  with on[OutOfBounds].panic //is fine because moves are always 4 characters long
+  val fromFile = fileToIndex(move.charAt(0))
+  val fromRank = rankToIndex(move.charAt(1))
+  val piece = list::get(list::get(board.cells, fromRank), fromFile)
+  piece match {
+    case Some(King(_)) => 
+      move == "e1g1" || // White kingside
+      move == "e1c1" || // White queenside
+      move == "e8g8" || // Black kingside
+      move == "e8c8"    // Black queenside
+    case _ => false
+  }
+}
+
+def isPromotion(board: Board, move: String): Bool = {
+  with on[OutOfBounds].panic //is fine because moves are always 4 characters long
+  val fromFile = fileToIndex(move.charAt(0))
+  val fromRank = rankToIndex(move.charAt(1))
+  val toRank = rankToIndex(move.charAt(3))
+  val piece = list::get(list::get(board.cells, fromRank), fromFile)
+  
+  piece match {
+    case Some(Pawn(_)) => toRank == 0 || toRank == 7
+    case _ => false
+  }
+}
+
+
+def makeMove(board: Board, move: String): Board= {
+  if (isCastling(board, move) ) {
+    if (move == "e1g1") { // White kingside
+      var board = movePiece(board, "e1g1")
+      return movePiece(board, "h1f1")
+    } else if (move == "e1c1") { // White queenside
+      var board = movePiece(board, "e1c1") 
+      return movePiece(board, "a1d1")
+    } else if (move == "e8g8") { // Black kingside
+      var board = movePiece(board, "e8g8")
+      return movePiece(board, "h8f8") 
+    } else { // Black queenside
+      var board = movePiece(board, "e8c8")
+      return movePiece(board, "a8d8")
+    }
+  } else if (isPromotion(board, move)) {
+    with on[OutOfBounds].panic
+      val fromFile = fileToIndex(move.charAt(0))
+      val fromRank = rankToIndex(move.charAt(1))
+      val toRank = rankToIndex(move.charAt(3))
+      val piece = list::get(list::get(board.cells, fromRank), fromFile)
+      
+      piece match {
+        case Some(Pawn(_)) =>
+          var newBoard = movePiece(board, move)
+          val toFile = fileToIndex(move.charAt(2))
+        
+          Board(newBoard.cells.mapWithIndex { (r, rank) =>
+            rank.mapWithIndex { (f, square) =>
+              if (r == toRank && f == toFile) {
+                Some(Queen(toRank == 0))
+              } else {
+                square
+              }
+            }
+          })
+        case _ => board
+      }
+  } else {
+    movePiece(board, move)
+  }
+}
+
+
+
+def movePiece(board: Board, move: String): Board = {
 
   with on[OutOfBounds].panic //is fine because moves are always 4 characters long
-  // Convert algebraic notation
   val fromFile = fileToIndex(move.charAt(0))
   val fromRank = rankToIndex(move.charAt(1))
   val toFile = fileToIndex(move.charAt(2))
   val toRank = rankToIndex(move.charAt(3))
 
-  // Get the moving piece
   val piece = list::get(list::get(board.cells, fromRank), fromFile)
 
   // Create new board with updated positions
   val newCells = board.cells.mapWithIndex { (r, rank) =>
     rank.mapWithIndex { (f, square) =>
       if (r == fromRank && f == fromFile) {
-        None() // Clear source square
+        None() 
       } else if (r == toRank && f == toFile) {
-        piece // Place piece at destination
+        piece
       } else {
         square
       }
