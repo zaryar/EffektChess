@@ -1,5 +1,7 @@
 # EffektChess(puzzles)
 
+![Tests](https://github.com/zaryar/EffektChess/workflows/Effekt%20Tests/badge.svg)
+
 The base idea is that I first find the best rated puzzles with popularity (Popularity is a number between 100 (best) and -100 (worst).). Then a random puzzle is chosen and build from the FEN notation. After that, the user sees the current check board via ASCII and can put in his move with algebraic notation. The move can be correct or incorrect, after a correct move the user sees the move from the opponent and the system repeats. After a wrong move, he can try again, maybe like 3 times or so.
 
 I did some research and found that Lichess shares their puzzles in a CSV file with the following structure: PuzzleId,**FEN**,**Moves**,_Rating_,_RatingDeviation_,**Popularity**,NbPlays,_Themes_,GameUrl,OpeningTags.
