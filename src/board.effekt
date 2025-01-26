@@ -51,7 +51,7 @@ def makeMove(board: Board, move: String): Board= {
       return movePiece(board, "a8d8")
     }
   } else if (isPromotion(board, move)) {
-    with on[OutOfBounds].panic
+    with on[OutOfBounds].panic //is fine because moves are always 4 characters long
       val fromFile = fileToIndex(move.charAt(0))
       val fromRank = rankToIndex(move.charAt(1))
       val toRank = rankToIndex(move.charAt(3))
