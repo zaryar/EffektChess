@@ -8,6 +8,7 @@ import src/fen
 import io/filesystem
 import src/csvmanager
 import string
+import src/display
 
 def main() = mainSuite("chess moves") {
   with on[OutOfBounds].panic;
@@ -16,7 +17,7 @@ def main() = mainSuite("chess moves") {
   }
 
   test("White kingside castling") {
-    val initialFen = "4k3/8/8/8/8/8/8/4K2R w e1g1 - 0 1"
+    val initialFen = "8/8/8/8/8/8/8/4K2R w e1g1 - 0 1"
     val board = fenToBoard(initialFen)
     
     // Make castling move
@@ -31,5 +32,25 @@ def main() = mainSuite("chess moves") {
       Some(Rook(true))
     )
   }
+  test("promotion"){
+    val initialFen = "8/p7/8/8/8/8/8/8 w a7a8 - 0 1"
+    val board = fenToBoard(initialFen)
+    val newBoard = makeMove(board, "a7a8")
+    assertEqual(
+      list::get(list::get(newBoard.cells, 0), 0), 
+      Some(Queen(true))
+    )
+  }
+  test("promotion black"){
+    val initialFen = "8/8/8/8/8/8/p7/8 w a2a1 - 0 1"
+    val board = fenToBoard(initialFen)
+    val newBoard = makeMove(board, "a2a1")
+    assertEqual(
+      list::get(list::get(newBoard.cells, 7), 0),
+      Some(Queen(false))
+    )
+
+  }
+  
 
 }

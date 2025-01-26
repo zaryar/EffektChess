@@ -1190,7 +1190,6 @@ PuzzleId,FEN,Moves,Rating,RatingDeviation,Popularity,NbPlays,Themes,GameUrl,Open
 1lpYk,5rk1/nprbqppp/p3p3/2PpP3/PP6/3Q3P/1NB2PP1/1R2R1K1 b - - 2 24,e7g5 d3h7,502,90,100,150,kingsideAttack mate mateIn1 middlegame oneMove,https://lichess.org/3YlQLXJ7/black#48,
 1lq1G,r2q1rk1/3bb1p1/p3p2p/3pB3/1p1Pp3/2P3Q1/PP3PPP/1BR2RK1 b - - 1 20,b4c3 g3g7,640,79,100,152,kingsideAttack mate mateIn1 middlegame oneMove,https://lichess.org/Ybovvu4i/black#40,
 1ls7y,r1n2rk1/1p1b1ppp/p3pb2/2pp2N1/2PP3P/qP1QP3/P4PPB/1R3K1R b - - 1 17,d5c4 d3h7,562,83,98,491,kingsideAttack mate mateIn1 middlegame oneMove,https://lichess.org/mhdQTHUu/black#34,Queens_Pawn_Game Queens_Pawn_Game_Other_variations
-1lszn,8/1R6/4pk2/3p4/8/7R/2r1r1PP/6K1 w - - 1 38,h3g3 c2c1,517,87,100,168,endgame master mate mateIn1 oneMove rookEndgame,https://lichess.org/ocwnShYX#75,
 1m6yp,3Q2k1/pp3p1p/6p1/6P1/8/1PQ5/3r1q2/1K1R4 b - - 0 34,d2d8 d1d8,548,80,100,142,endgame mate mateIn1 oneMove,https://lichess.org/mstJYzEM/black#68,
 1m87J,2rq1rk1/4bppp/p3b3/np1PB3/8/P2Q4/2BN2PP/2R2RK1 b - - 0 18,d8d5 d3h7,680,79,98,301,kingsideAttack mate mateIn1 middlegame oneMove,https://lichess.org/UuluebtS/black#36,Sicilian_Defense Sicilian_Defense_Smith-Morra_Gambit
 1mP03,4r1k1/ppp3pp/2p5/7q/6n1/2Nb3Q/PPPP1PP1/R1B3K1 w - - 0 17,h3h5 e8e1,480,82,100,177,middlegame,https://lichess.org/qK8KtYK6#33,Four_Knights_Game Four_Knights_Game_Spanish_Variation
@@ -1274,7 +1273,6 @@ PuzzleId,FEN,Moves,Rating,RatingDeviation,Popularity,NbPlays,Themes,GameUrl,Open
 1swfi,2r2rk1/7p/p3PB2/qpp2p1P/3p4/2P1Pn2/PP3P2/1BKR2R1 b - - 1 24,f3g1 d1g1,699,76,98,414,master mate mateIn1 middlegame oneMove,https://lichess.org/HZ3hio6X/black#48,
 1szR7,5r2/kR1r2p1/P1p1q3/8/3Pp3/4P1Pp/5P1P/1Q4K1 b - - 4 39,d7b7 b1b7,797,83,100,123,endgame mate mateIn1 oneMove,https://lichess.org/sGRMn6rS/black#78,
 1t3jH,2r5/3Rnk2/5p2/2K2P1p/2p2PP1/P1P4P/1P6/8 w - - 5 41,c5d6 c8c6,524,87,100,115,endgame,https://lichess.org/tsC9G6rq#81,
-1tE5D,2rqnrk1/pp1b2p1/4pBQp/2pp4/4pP2/PP1BP1R1/2PN2PP/R5K1 b - - 0 17,e8f6 g6g7,701,225,100,17,kingsideAttack mate mateIn1 middlegame oneMove,https://lichess.org/h6i4qpsa/black#34,Queens_Pawn_Game Queens_Pawn_Game_Zukertort_Variation
 1tJqC,7k/p4Qp1/1p2p2p/1P4q1/8/P6P/P2r1RP1/5r1K w - - 0 34,f2f1 g5g2,589,78,99,798,endgame mate mateIn1 oneMove,https://lichess.org/XW5ALJy3#67,
 1tKPE,1r3Qk1/p6p/6pB/3Pp3/4P3/3q4/6PP/5R1K b - - 5 31,b8f8 f1f8,490,102,97,294,endgame mate mateIn1 oneMove,https://lichess.org/V6vxABzz/black#62,
 1tKvW,5rkr/pp4pp/2p5/3p4/3N2Q1/2P5/PPn3PP/3R1q1K w - - 0 24,d1f1 f8f1,420,88,97,1199,backRankMate endgame mate mateIn1 oneMove,https://lichess.org/h0jppVNh#47,

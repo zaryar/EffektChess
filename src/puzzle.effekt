@@ -20,27 +20,32 @@ record Puzzle(
   hardcore: Bool
 )
 
+effect InvalidMove(msg: String): Unit
+
 def separator() = "----------------------------------------"
 
-def isValidMove(move: String): Bool = {
+def isValidMove(move: String): Bool /  InvalidMove = {
 
-  var valid = false
 
-  if (move.length == 4){
-    val validCols = "abcdefgh"
-    val validRows = "12345678"
-    with on[OutOfBounds].panic; //fine because we checked the length
-    if(
-    utils::contains(validCols, move.charAt(0)) && 
-    utils::contains(validRows, move.charAt(1)) && 
-    utils::contains(validCols, move.charAt(2)) && 
-    utils::contains(validRows, move.charAt(3)))
-    {
-      valid = true
-    }
+  val validCols = "abcdefgh"
+  val validRows = "12345678"
+  with on[OutOfBounds].panic; //fine because we checked the length
+  if (move.length != 4) {
+    do InvalidMove("Invalid move length (use algebraic notation e.g. e2e4)")
+    false
   }
-  return valid
-
+  else if (not( 
+    utils::contains(validCols, move.charAt(0)) &&
+    utils::contains(validRows, move.charAt(1)) &&
+    utils::contains(validCols, move.charAt(2)) &&
+    utils::contains(validRows, move.charAt(3))))
+  {
+    do InvalidMove("Invalid move format (use algebraic notation e.g. e2e4)")
+    false
+  }
+  else {
+    true
+  }
 }
 
 def playPuzzle(puzzle: Puzzle): Bool = {
@@ -60,6 +65,7 @@ def playPuzzle(puzzle: Puzzle): Bool = {
   var turn = 0
   printBoard(puzzle.board, puzzle.playWhite, "0")
 
+  try{
   puzzle.moves.foreach { (move) {movesloop}=>
     if (turn.mod(2) == 0) {
       println(bold ++ "Move " ++ show(turn + 1) ++ reset ++ " - Enemy " ++ toMove(whiteToMove))
@@ -73,7 +79,7 @@ def playPuzzle(puzzle: Puzzle): Bool = {
       val input = do readLine()      
 
       if (not(isValidMove(input))){
-        println(red ++ "Invalid format! Use algebraic notation (e.g. e2e4)" ++ reset)
+        //println(red ++ "Invalid format! Use algebraic notation (e.g. e2e4)" ++ reset)
         do writeLine(green ++ "Try again: " ++ reset)
         val input = do readLine()  
         ()
@@ -108,6 +114,10 @@ def playPuzzle(puzzle: Puzzle): Bool = {
     printBoard(board, puzzle.playWhite, move.substring(0,2) )
     whiteToMove = not(whiteToMove)
     turn = turn + 1
+  }
+  } with InvalidMove { (msg) =>
+    println(red ++ "✗ " ++ msg ++ reset)
+    resume(())
   }
   println(separator())
   if (not(lost)) {
