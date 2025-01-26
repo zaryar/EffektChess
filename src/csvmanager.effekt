@@ -7,14 +7,21 @@ import list
 import src/utils
 
 
+effect InvalidPuzzle(msg: String): (String, List[String])
 
+val defaultPuzzle = ("8/3N2k1/5b2/5R2/r5KP/8/8/8 w - - 3 48", ["g4h5", "a4h4"])
 
+def getRandomPuzzle(path: String): (String, List[String]) / InvalidPuzzle = {
 
-def getRandomPuzzle(path: String): (String, List[String]) = {
+  with on[IOError].default { 
+    do InvalidPuzzle("Could not read puzzle file")
+    defaultPuzzle 
+  }
+  with on[OutOfBounds].default {
+    do InvalidPuzzle("Invalid puzzle format")
+    defaultPuzzle
+  }
 
-  with on[IOError].panic;
-  with on[OutOfBounds].panic;
-  
 
   val fileContent = readFile(path)
   val lines = fileContent.split("\n")

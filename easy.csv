@@ -2101,7 +2101,6 @@ PuzzleId,FEN,Moves,Rating,RatingDeviation,Popularity,NbPlays,Themes,GameUrl,Open
 34WG0,8/2R5/4pp1k/6p1/3rPnPp/2R4P/5P2/5rK1 w - - 0 41,g1f1 d4d1,431,94,100,147,endgame master mate mateIn1 oneMove,https://lichess.org/Fd6HZ8ii#81,
 34YmP,5rk1/5pbp/2N3p1/3PP3/1Q2nn2/7P/1P1N1qPK/4R3 w - - 0 31,d2e4 f2g2,744,76,99,1136,master mate mateIn1 middlegame oneMove,https://lichess.org/mjTIJbld#61,
 34i2T,rn2k2r/pp3ppp/2p5/3p4/3P2nq/2NQP3/PP2NPP1/R1B2RK1 w kq - 3 12,e2g3 h4h2,772,78,100,133,mate mateIn1 oneMove opening,https://lichess.org/PyA6b4n6#23,Slav_Defense Slav_Defense_Other_variations
-34nPe,r2qrn1k/ppp3p1/3b1p1p/3Qp3/P1B1P3/1P4B1/2P2PPP/R3R1K1 b - - 2 19,c7c6 d5g8,555,89,100,140,mate mateIn1 middlegame oneMove,https://lichess.org/7NNBc6gA/black#38,
 34qRg,r2nk2r/pb1pnpp1/1p1Bp2p/4P2q/P6Q/2PB1N1P/5PP1/R2R2K1 b kq - 4 18,b7f3 h4e7,746,79,100,190,mate mateIn1 middlegame oneMove,https://lichess.org/H9iM0BHP/black#36,Sicilian_Defense Sicilian_Defense_Smith-Morra_Gambit_Accepted
 34vnC,r1b4k/2b4Q/2p1PN1p/pP4n1/P7/4PN2/8/2K3R1 b - - 2 27,g5h7 g1g8,589,93,97,1580,arabianMate master mate mateIn1 middlegame oneMove,https://lichess.org/1f5WCvEu/black#54,
 34vrS,r1bq2k1/6pp/pbn5/1p1B4/1P6/P4N2/5PPP/R1B1Q1K1 b - - 0 18,d8d5 e1e8,750,82,100,48,mate mateIn1 middlegame oneMove,https://lichess.org/NkUhUpDb/black#36,Queens_Gambit_Declined Queens_Gambit_Declined_Other_variations

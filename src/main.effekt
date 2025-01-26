@@ -14,6 +14,7 @@ val green = "\u001b[32m"
 val reset = "\u001b[0m"
 
 
+
 def main() = {
   var currentProgress = readProgress()
   var puzzlesSolved = 0
@@ -38,14 +39,21 @@ def main() = {
         case _ => ()
       }
       val (file, difficulty) = choice match {
-        case "1" => if (isUnlocked(currentProgress, "easy")) ("easy.csv", "easy") else ("", "")
+        case "1" => if (isUnlocked(currentProgress, "easy")) ("easy1.csv", "easy") else ("", "")
         case "2" => if (isUnlocked(currentProgress, "medium")) ("medium.csv", "medium") else ("", "")
         case "3" => if (isUnlocked(currentProgress, "hard")) ("hard.csv", "hard") else ("", "")
         case _ => ("", "")
       }
       
       if (file != "") {
-        val puzzle = getRandomPuzzle(file)
+        var puzzle = ("", [])
+        try{
+          puzzle = getRandomPuzzle(file)
+        }
+        with InvalidPuzzle { (msg) =>
+          println(red ++ msg ++ " using default puzzle" ++ reset)
+          resume(("8/3N2k1/5b2/5R2/r5KP/8/8/8 w - - 3 48", ["g4h5", "a4h4"]))
+        }
         var p = Puzzle(puzzle.second, fenToBoard(puzzle.first), fenToColor(puzzle.first), hardcore)
         if (puzzle::playPuzzle(p)) {
           println("You solved the puzzle!")

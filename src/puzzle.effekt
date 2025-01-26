@@ -21,11 +21,12 @@ record Puzzle(
 )
 
 effect InvalidMove(msg: String): Unit
+effect PuzzleWon(): Unit
+effect PuzzleLost(correctMove: String): Unit
 
 def separator() = "----------------------------------------"
 
 def isValidMove(move: String): Bool /  InvalidMove = {
-
 
   val validCols = "abcdefgh"
   val validRows = "12345678"
@@ -66,54 +67,54 @@ def playPuzzle(puzzle: Puzzle): Bool = {
   printBoard(puzzle.board, puzzle.playWhite, "0")
 
   try{
-  puzzle.moves.foreach { (move) {movesloop}=>
-    if (turn.mod(2) == 0) {
-      println(bold ++ "Move " ++ show(turn + 1) ++ reset ++ " - Enemy " ++ toMove(whiteToMove))
-      println(green ++ "→ " ++ reset ++ move)
-      board = makeMove(board, move)
-
-    } else {
-      println(bold ++ "Move " ++ show(turn + 1) ++ reset ++ " - Your Turn " ++ toMove(whiteToMove))
-      with console;
-      do writeLine(green ++ "Enter move: " ++ reset)
-      val input = do readLine()      
-
-      if (not(isValidMove(input))){
-        //println(red ++ "Invalid format! Use algebraic notation (e.g. e2e4)" ++ reset)
-        do writeLine(green ++ "Try again: " ++ reset)
-        val input = do readLine()  
-        ()
-      }
-      if (input == move || input == "a1a1") {
-        println(green ++ "little cheater" ++ reset)
+    puzzle.moves.foreach { (move) {movesloop}=>
+      if (turn.mod(2) == 0) {
+        println(bold ++ "Move " ++ show(turn + 1) ++ reset ++ " - Enemy " ++ toMove(whiteToMove))
+        println(green ++ "→ " ++ reset ++ move)
         board = makeMove(board, move)
-      }
-      else {
-        if (puzzle.hardcore) {
-          println(red ++ "✗ Wrong! The correct move was: " ++ bold ++ move ++ reset)
-          lost = true
-          movesloop.break()}
-        else {
-        println(red ++ "Wrong move. One more chance!" ++ reset)
-        with on[OutOfBounds].panic  //is fine because moves are always 4 characters long
-        println(bold ++ "Hint: Move piece at " ++ green ++ move.substring(0, 2) ++ reset)
-        do writeLine(green ++ "Enter move: " ++ reset)
-        val input = do readLine()       
 
-        if (input == move) {
-          println(green ++ "✓ Correct!" ++ reset)
-          board = makeMove(board, move)
-        } else {
-          println(red ++ "✗ Wrong! The correct move was: " ++ bold ++ move ++ reset)
-          lost = true
-          movesloop.break()
+      } else {
+        println(bold ++ "Move " ++ show(turn + 1) ++ reset ++ " - Your Turn " ++ toMove(whiteToMove))
+        with console;
+        do writeLine(green ++ "Enter move: " ++ reset)
+        val input = do readLine()      
+
+        if (not(isValidMove(input))){
+          //println(red ++ "Invalid format! Use algebraic notation (e.g. e2e4)" ++ reset)
+          do writeLine(green ++ "Try again: " ++ reset)
+          val input = do readLine()  
+          ()
         }
-      }}
-      
-    }
-    printBoard(board, puzzle.playWhite, move.substring(0,2) )
-    whiteToMove = not(whiteToMove)
-    turn = turn + 1
+        if (input == move || input == "a1a1") {
+          println(green ++ "little cheater" ++ reset)
+          board = makeMove(board, move)
+        }
+        else {
+          if (puzzle.hardcore) {
+            println(red ++ "✗ Wrong! The correct move was: " ++ bold ++ move ++ reset)
+            lost = true
+            movesloop.break()}
+          else {
+          println(red ++ "Wrong move. One more chance!" ++ reset)
+          with on[OutOfBounds].panic  //is fine because moves are always 4 characters long
+          println(bold ++ "Hint: Move piece at " ++ green ++ move.substring(0, 2) ++ reset)
+          do writeLine(green ++ "Enter move: " ++ reset)
+          val input = do readLine()       
+
+          if (input == move) {
+            println(green ++ "✓ Correct!" ++ reset)
+            board = makeMove(board, move)
+          } else {
+            println(red ++ "✗ Wrong! The correct move was: " ++ bold ++ move ++ reset)
+            lost = true
+            movesloop.break()
+          }
+        }}
+        
+      }
+      printBoard(board, puzzle.playWhite, move.substring(0,2) )
+      whiteToMove = not(whiteToMove)
+      turn = turn + 1
   }
   } with InvalidMove { (msg) =>
     println(red ++ "✗ " ++ msg ++ reset)
