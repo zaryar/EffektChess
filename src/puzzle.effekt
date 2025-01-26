@@ -55,7 +55,6 @@ def playPuzzle(puzzle: Puzzle): Unit / {PuzzleLost, PuzzleWon}  = {
     else bold ++ "(Black)" ++ reset
   }
 
-  var lost = false
   var board = puzzle.board
   var whiteToMove = puzzle.playWhite
 
@@ -80,7 +79,6 @@ def playPuzzle(puzzle: Puzzle): Unit / {PuzzleLost, PuzzleWon}  = {
         val input = do readLine()      
 
         if (not(isValidMove(input))){
-          //println(red ++ "Invalid format! Use algebraic notation (e.g. e2e4)" ++ reset)
           do writeLine(green ++ "Try again: " ++ reset)
           val input = do readLine()  
           ()

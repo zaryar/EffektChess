@@ -9,7 +9,7 @@ import io/filesystem
 import src/csvmanager
 import string
 import src/display
-
+import src/progress
 def main() = mainSuite("chess moves") {
   with on[OutOfBounds].panic;
   test("Hello world") {
@@ -50,6 +50,107 @@ def main() = mainSuite("chess moves") {
       Some(Queen(false))
     )
 
+  }
+  test("Black kingside castling") {
+    val initialFen = "4k2r/8/8/8/8/8/8/8 b - - 0 1"
+    val board = fenToBoard(initialFen)
+    val newBoard = makeMove(board, "e8g8")
+    
+    assertEqual(
+      list::get(list::get(newBoard.cells, 0), 6), 
+      Some(King(false))
+    )
+    assertEqual(
+      list::get(list::get(newBoard.cells, 0), 5), 
+      Some(Rook(false))
+    )
+  }
+
+  test("Pawn capture") {
+    val initialFen = "8/8/8/3p4/4P3/8/8/8 w - - 0 1"
+    val board = fenToBoard(initialFen)
+    val newBoard = makeMove(board, "e4d5")
+    
+    assertEqual(
+      list::get(list::get(newBoard.cells, 3), 3), 
+      Some(Pawn(true))
+    )
+  }
+
+  test("Complex position") {
+    val initialFen = "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 0 1"
+    val board = fenToBoard(initialFen)
+    val newBoard = makeMove(board, "f3e5")
+    
+    assertEqual(
+      list::get(list::get(newBoard.cells, 3), 4), 
+      Some(Knight(true))
+    )
+  }
+
+  test("Multiple moves sequence") {
+    val initialFen = "8/8/8/8/8/8/4P3/8 w - - 0 1"
+    var board = fenToBoard(initialFen)
+    
+    board = makeMove(board, "e2e4")
+    board = makeMove(board, "e4e5")
+    board = makeMove(board, "e5e6")
+    
+    assertEqual(
+      list::get(list::get(board.cells, 2), 4), 
+      Some(Pawn(true))
+    )
+  }
+
+  test("Parse starting position") {
+    val fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+    val board = fenToBoard(fen)
+    assertEqual(
+      list::get(list::get(board.cells, 0), 0),
+      Some(Rook(false))
+    )
+    assertEqual(
+      list::get(list::get(board.cells, 7), 4),
+      Some(King(true))
+    )
+  }
+
+  test("Parse empty squares") {
+    val fen = "8/8/8/3P4/8/8/8/8 w - - 0 1"
+    val board = fenToBoard(fen)
+    assertEqual(
+      list::get(list::get(board.cells, 3), 3),
+      Some(Pawn(true))
+    )
+  }
+
+  test("Color detection") {
+    val fenWhite = "8/8/8/8/8/8/8/8 w - - 0 1"
+    val fenBlack = "8/8/8/8/8/8/8/8 b - - 0 1"
+    assertEqual(fenToColor(fenWhite), true)
+    assertEqual(fenToColor(fenBlack), false)
+  }
+
+    test("Difficulty unlocking") {
+    val progress = Progress(0, 0, 0)
+    assertEqual(isUnlocked(progress, "easy"), true)
+    assertEqual(isUnlocked(progress, "medium"), false)
+    assertEqual(isUnlocked(progress, "hard"), false)
+    
+    val progress2 = Progress(10, 0, 0)
+    assertEqual(isUnlocked(progress2, "medium"), true)
+    
+    val progress3 = Progress(10, 10, 0)
+    assertEqual(isUnlocked(progress3, "hard"), true)
+  }
+
+  test("Progress updates") {
+    var p = Progress(0, 0, 0)
+    p = updateProgress(p, "easy")
+    assertEqual(p.solvedEasy, 1)
+    
+    p = updateProgress(p, "medium")
+    assertEqual(p.solvedMedium, 1)
   }
   
 

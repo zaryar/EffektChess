@@ -63,7 +63,7 @@ def fenToBoard(fen: String): Board = {
     return result.reverse()
   } 
 
-  with on[OutOfBounds].panic; //TODO NOT NICE
+  with on[OutOfBounds].panic; 
 
   val placement = fen.split(" ").get(0) //get moves
   val ranks = placement.split("/") // Split into ranks (rows)
