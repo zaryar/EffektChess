@@ -29,6 +29,15 @@ def updateProgress(progress: Progress, difficulty: String): Progress = {
   }
 }
 
+def removeProgress(progress: Progress, difficulty: String): Progress = {
+  difficulty match {
+    case "easy" => Progress(progress.solvedEasy - 1, progress.solvedMedium, progress.solvedHard)
+    case "medium" => Progress(progress.solvedEasy, progress.solvedMedium - 1, progress.solvedHard)
+    case "hard" => Progress(progress.solvedEasy, progress.solvedMedium, progress.solvedHard - 1)
+    case _ => progress
+  }
+}
+
 def remainingPuzzles(progress: Progress, difficulty: String): Int = {
   difficulty match {
     case "medium" => 10 - progress.solvedEasy

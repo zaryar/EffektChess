@@ -49,7 +49,7 @@ def isValidMove(move: String): Bool /  InvalidMove = {
   }
 }
 
-def playPuzzle(puzzle: Puzzle): Bool = {
+def playPuzzle(puzzle: Puzzle): Unit / {PuzzleLost, PuzzleWon}  = {
   def toMove(white: Bool): String = {
     if (white) bold ++ "(White)" ++ reset 
     else bold ++ "(Black)" ++ reset
@@ -91,9 +91,8 @@ def playPuzzle(puzzle: Puzzle): Bool = {
         }
         else {
           if (puzzle.hardcore) {
-            println(red ++ "✗ Wrong! The correct move was: " ++ bold ++ move ++ reset)
-            lost = true
-            movesloop.break()}
+            do PuzzleLost(move)
+            }
           else {
           println(red ++ "Wrong move. One more chance!" ++ reset)
           with on[OutOfBounds].panic  //is fine because moves are always 4 characters long
@@ -105,9 +104,7 @@ def playPuzzle(puzzle: Puzzle): Bool = {
             println(green ++ "✓ Correct!" ++ reset)
             board = makeMove(board, move)
           } else {
-            println(red ++ "✗ Wrong! The correct move was: " ++ bold ++ move ++ reset)
-            lost = true
-            movesloop.break()
+            do PuzzleLost(move)
           }
         }}
         
@@ -121,13 +118,6 @@ def playPuzzle(puzzle: Puzzle): Bool = {
     resume(())
   }
   println(separator())
-  if (not(lost)) {
-    println(green ++ "🏆 Congratulations! Puzzle solved!" ++ reset)
-    true
-  } else {
-    println(red ++ "Better luck next time!" ++ reset)
-    false
-  }
-  
+  do PuzzleWon() 
 
 }

@@ -17,7 +17,6 @@ val reset = "\u001b[0m"
 
 def main() = {
   var currentProgress = readProgress()
-  var puzzlesSolved = 0
   var hardcore = false
   
   while(true) {
@@ -55,11 +54,18 @@ def main() = {
           resume(("8/3N2k1/5b2/5R2/r5KP/8/8/8 w - - 3 48", ["g4h5", "a4h4"]))
         }
         var p = Puzzle(puzzle.second, fenToBoard(puzzle.first), fenToColor(puzzle.first), hardcore)
-        if (puzzle::playPuzzle(p)) {
-          println("You solved the puzzle!")
+        try{
+          puzzle::playPuzzle(p)
+        }
+        with PuzzleWon { () =>
+          println(green ++ "🏆 Congratulations! Puzzle solved!" ++ reset)
           currentProgress = updateProgress(currentProgress, difficulty)
           saveProgress(currentProgress)
-          puzzlesSolved = puzzlesSolved + 1
+        }
+        with PuzzleLost { (correctMove) =>
+          println(red ++ "✗ Wrong! The correct move was: " ++ bold ++ correctMove ++ reset)
+          currentProgress = removeProgress(currentProgress, difficulty)
+          saveProgress(currentProgress)
         }
       }
       
