@@ -13,13 +13,13 @@ A chess puzzle trainer implemented in [Effekt](https://github.com/effekt-lang/ef
 - User Input Validation (Accept user moves in algebraic notation)
 - Check if the user’s move matches the correct solution.
 - if yes: the opponent moves
-- if no: get 3 changses and lose.
+- if no: get 3 changes and lose.
 
 ## can-have
 
 - Better way to see the current state of the board / better way to input his move.
 - Filter by Rating (difficulty) 
-- Progression system: Like you start by only being able to do simple puzzles, if you solve 10 you unlock harder puzzles and so on.
+- Progression system: Like you start by only being able to do simple puzzles; if you solve 10, you unlock harder puzzles, and so on.
 
 ## Will-not-have
 
@@ -45,7 +45,7 @@ A chess puzzle trainer implemented in [Effekt](https://github.com/effekt-lang/ef
 - list - List operations
 - io - File operations
 - exception - Error handling
-- chesspuzzles from lichess
+- Chess puzzles from Lichess
 
 ## How to use
 1. Install Effekt following the official instructions
@@ -60,14 +60,15 @@ effekt src/test.effek
 
 ## Features
 
-- **Sim View**:
+- **Simple Viewer**:
    - View board from both white and black's perspective
    - Show the last move from the enemie
+   - Put in your move with algebraic notation.
 - **Progress System**: 
   - Unlock harder puzzles by solving easier ones
   - Lose progress when failing puzzles
 - **Settings**: 
-  - Remove allready played puzzles
+  - Remove already played puzzles.
   - Hardcore Mode ( One chance per move )
 - **Effect-based Error Handling**:
   - Invalid puzzle handling
