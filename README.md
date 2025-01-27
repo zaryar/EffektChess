@@ -13,7 +13,7 @@ A chess puzzle trainer implemented in [Effekt](https://github.com/effekt-lang/ef
 - User Input Validation (Accept user moves in algebraic notation)
 - Check if the user’s move matches the correct solution.
 - if yes: the opponent moves
-- if no: get 3 changes and lose.
+- if no: get 3 chances
 
 ## can-have
 
