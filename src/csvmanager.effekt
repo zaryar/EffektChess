@@ -11,7 +11,7 @@ effect InvalidPuzzle(msg: String): (String, List[String])
 
 val defaultPuzzle = ("8/3N2k1/5b2/5R2/r5KP/8/8/8 w - - 3 48", ["g4h5", "a4h4"])
 
-def getRandomPuzzle(path: String): (String, List[String]) / InvalidPuzzle = {
+def getRandomPuzzle(path: String, deletePuzzle: Bool): (String, List[String]) / InvalidPuzzle = {
 
   with on[IOError].default { 
     do InvalidPuzzle("Could not read puzzle file")
@@ -43,10 +43,11 @@ def getRandomPuzzle(path: String): (String, List[String]) / InvalidPuzzle = {
     }
   }
 
-  val remainingPuzzles = buildNewList(0, Nil())
-
-  val newContent = header ++ "\n" ++ remainingPuzzles.join("\n")
-  writeFile(path, newContent)
+  if (deletePuzzle) {
+    val remainingPuzzles = buildNewList(0, Nil())
+    val newContent = header ++ "\n" ++ remainingPuzzles.join("\n")
+    writeFile(path, newContent)
+  }
 
   val fields = selectedLine.split(",")
   val movesString = fields.get(2)

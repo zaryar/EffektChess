@@ -18,6 +18,7 @@ val reset = "\u001b[0m"
 def main() = {
   var currentProgress = readProgress()
   var hardcore = false
+  var deletePuzzles = true
   
   while(true) {
       println("")
@@ -25,20 +26,28 @@ def main() = {
       println("Welcome to Chess Puzzles!")
       println("")
       println("Current mode: " ++ (if (hardcore) red ++ "HARDCORE" else green ++ "NORMAL") ++ reset ++ "(h to toggle)")
+      println("Puzzle deletion: " ++ (if (deletePuzzles) green ++ "ON" else red ++ "OFF") ++ reset ++ " (d to toggle)")
       
       val choice = showDifficultyMenu(currentProgress)
       choice match {
         case "h" =>         
-        hardcore = not(hardcore)
-        println(if (hardcore) 
-          red ++ "Hardcore mode activated - Only one chance per move!" ++ reset
-        else 
-          green ++ "Normal mode activated - Two chances per move" ++ reset
-        )
+          hardcore = not(hardcore)
+          println(if (hardcore) 
+            red ++ "Hardcore mode activated - Only one chance per move!" ++ reset
+          else 
+            green ++ "Normal mode activated - Two chances per move" ++ reset
+          )
+        case "d" =>
+          deletePuzzles = not(deletePuzzles)
+          println(if (deletePuzzles)
+            green ++ "Puzzle deletion activated" ++ reset
+          else
+            red ++ "Puzzle deletion deactivated" ++ reset
+          )
         case _ => ()
       }
       val (file, difficulty) = choice match {
-        case "1" => if (isUnlocked(currentProgress, "easy")) ("easy1.csv", "easy") else ("", "")
+        case "1" => if (isUnlocked(currentProgress, "easy")) ("easy.csv", "easy") else ("", "")
         case "2" => if (isUnlocked(currentProgress, "medium")) ("medium.csv", "medium") else ("", "")
         case "3" => if (isUnlocked(currentProgress, "hard")) ("hard.csv", "hard") else ("", "")
         case _ => ("", "")
@@ -47,7 +56,7 @@ def main() = {
       if (file != "") {
         var puzzle = ("", [])
         try{
-          puzzle = getRandomPuzzle(file)
+          puzzle = getRandomPuzzle(file, deletePuzzles)
         }
         with InvalidPuzzle { (msg) =>
           println(red ++ msg ++ " using default puzzle" ++ reset)
@@ -68,7 +77,5 @@ def main() = {
           saveProgress(currentProgress)
         }
       }
-      
-    
   }
 }
