@@ -18,7 +18,7 @@ def numToCol(num: Int): String = {
   }
 }
 
-def printBoard(board: Board, whiteView: Bool, sourceTile: String): Unit = {
+def printBoard(board: Board, blackView: Bool, sourceTile: String): Unit = {
   var linebreak = 0
   var isWhite = false
   
@@ -47,12 +47,12 @@ def printBoard(board: Board, whiteView: Bool, sourceTile: String): Unit = {
     }
   }
 
-  println("     " ++ (if (not(whiteView)) "a  b  c  d  e  f  g  h" else "h  g  f  e  d  c  b  a"))
+  println("     " ++ (if (not(blackView)) "a  b  c  d  e  f  g  h" else "h  g  f  e  d  c  b  a"))
   println("  __________________________")
 
-  var counter = if (not(whiteView)) 8 else 1
+  var counter = if (not(blackView)) 8 else 1
   
-  if (not(whiteView)) {
+  if (not(blackView)) {
     var row_idx = 8
     board.cells.foreach { row => 
       var rowString = show(counter) ++ " | "
