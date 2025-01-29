@@ -69,7 +69,7 @@ effekt src/test.effek
   - Lose progress when failing puzzles
 - **Settings**: 
   - Remove already played puzzles.
-  - Hardcore Mode ( One chance per move )
+  - Hardcore Mode ( One chance per move ) / Nomal mode, you get a tipp after you make a mistake
 - **Effect-based Error Handling**:
   - Invalid puzzle handling
   - Move validation
