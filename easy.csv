@@ -1537,7 +1537,6 @@ PuzzleId,FEN,Moves,Rating,RatingDeviation,Popularity,NbPlays,Themes,GameUrl,Open
 2IJxk,kQ6/rp4p1/p7/4P3/5q2/2R3p1/PP3PP1/3R2K1 b - - 0 31,a8b8 d1d8,654,79,100,140,endgame mate mateIn1 oneMove queenRookEndgame,https://lichess.org/5HSkhud6/black#62,
 2IOLp,6k1/7p/8/5R2/3q2K1/4pQ2/P4b2/8 w - - 17 49,g4h5 d4h4,584,81,97,400,endgame mate mateIn1 oneMove,https://lichess.org/NH8CIKDO#97,
 2IPE2,r3k2r/pp2ppbp/1nnq2p1/8/3P4/1B2BQ1P/PP3PP1/RN3RK1 b kq - 0 13,e8f8 f3f7,753,77,100,63,mate mateIn1 middlegame oneMove,https://lichess.org/zmLdpIHy/black#26,Sicilian_Defense Sicilian_Defense_Hyperaccelerated_Dragon
-2IXSH,r3kb1r/1pp2ppp/p1b5/4N1q1/P7/2P5/2PP1PPP/R1BQ1RK1 w kq - 1 11,d2d4 g5g2,778,109,100,46,kingsideAttack mate mateIn1 middlegame oneMove,https://lichess.org/NsDtuJmS#21,Kings_Knight_Opening Kings_Knight_Opening_Normal_Variation
 2Ickx,r2r2k1/pp1q1ppp/1nn2b2/4p3/3P4/1BNQBP1P/PP3P2/3R2RK w - - 0 18,d4d5 d7h3,687,79,97,707,kingsideAttack mate mateIn1 middlegame oneMove,https://lichess.org/h6O3RFFS#35,Caro-Kann_Defense Caro-Kann_Defense_Accelerated_Panov_Attack
 2IlDt,r1b2k2/ppp3bQ/3ppq1p/6p1/8/2NB1nP1/PPP2P2/2KR3R w - - 2 18,c3e4 f6b2,610,81,99,624,mate mateIn1 middlegame oneMove queensideAttack,https://lichess.org/HYuDpaMb#35,Indian_Defense Indian_Defense_Other_variations
 2IyMX,r7/p3kpp1/2Q5/4pb2/1qPP4/NN4r1/PB6/R1K5 w - - 1 27,c6a8 g3g1,605,79,99,738,master mate mateIn1 middlegame oneMove,https://lichess.org/MBuxCBhs#53,
@@ -4058,7 +4057,6 @@ PuzzleId,FEN,Moves,Rating,RatingDeviation,Popularity,NbPlays,Themes,GameUrl,Open
 5vbly,rn3qk1/pp3p1B/2pb1n1Q/3p2N1/3P2b1/8/PPP2PPP/4RK1R b - - 12 18,f6h7 h6h7,748,76,100,109,kingsideAttack mate mateIn1 middlegame oneMove,https://lichess.org/8KxRA1Wl/black#36,French_Defense French_Defense_Exchange_Variation
 5vfAJ,5rk1/7p/p5bP/5q2/3r4/P7/1P1Q1n2/K1BR1R2 w - - 3 39,d2d4 f5b1,499,87,98,527,master mate mateIn1 middlegame oneMove,https://lichess.org/aR5qJ90K#77,
 5vk9c,6rk/1p4p1/1p1p2Q1/pP1Pp1Rr/P1P2p2/3PnP1q/5N2/6RK w - - 0 36,f2h3 h5h3,562,79,100,70,kingsideAttack mate mateIn1 middlegame oneMove,https://lichess.org/hYkKryNR#71,
-5vnzw,3Q4/5qp1/4ppNk/3p3P/p1pP3P/P5r1/7K/8 b - - 2 39,g3g6 d8h8,547,87,97,1118,endgame master mate mateIn1 oneMove,https://lichess.org/OdD8UY7D/black#78,
 5vwbt,1r1k4/2p2p2/3q1n2/3P4/Q1P2pB1/1P4P1/P6r/R3R1K1 b - - 0 28,f6g4 e1e8,399,86,100,172,mate mateIn1 middlegame oneMove,https://lichess.org/w0b5ITG0/black#56,
 5wIAA,r5k1/p1q3pp/4p3/2b5/6n1/4B3/P1Q2PP1/2R2R1K w - - 0 24,c2c5 c7h2,758,78,99,356,mate mateIn1 middlegame oneMove,https://lichess.org/upxYdawW#47,
 5wQg1,8/7p/4b1p1/1P1k4/3p4/4p1P1/1P1KN2P/8 w - - 0 35,d2d3 e6f5,575,81,100,83,endgame mate mateIn1 oneMove,https://lichess.org/HL4dOgKJ#69,
