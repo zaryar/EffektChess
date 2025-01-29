@@ -4749,7 +4749,6 @@ PuzzleId,FEN,Moves,Rating,RatingDeviation,Popularity,NbPlays,Themes,GameUrl,Open
 1RzSx,r2qk2r/pp2bppp/2np1n2/2p1p3/Q1N1P1b1/2PP1N2/PP3PPP/R1B1KB1R w KQkq - 7 8,c4a5 d8a5 a4a5 c6a5,834,78,97,1118,crushing opening short,https://lichess.org/cnHwt6Hg#15,Philidor_Defense Philidor_Defense_Other_variations
 1RztP,3q1k2/8/1pQPBB2/3P4/5p2/5Kr1/8/8 w - - 2 46,f3f2 d8f6 c6c8 f8g7,975,76,99,2183,crushing endgame hangingPiece master short,https://lichess.org/xTdl5bwa#91,
 1S00Z,8/pppq1pkp/5rpr/3p1PQ1/3PP1R1/P1P2P1P/7K/4R3 b - - 3 29,d7b5 e4e5 f6f5 g5f5,1603,75,97,6925,crushing endgame pin short,https://lichess.org/EdngfLGi/black#58,
-1S2PG,2rr2k1/1p3pp1/7p/p3pN2/Pbb1P3/2PB1R1P/6P1/3R3K b - - 0 26,b4c3 f5e7 g8f8 e7c8,872,77,99,1228,crushing fork middlegame short,https://lichess.org/8wpvdtCz/black#52,
 1S3pV,r1b2rk1/ppp2ppp/2nP4/2b5/2BNn2q/2P5/PP3PPP/RNBQ1RK1 w - - 1 10,d4f3 c5f2 f1f2 h4f2,1255,74,97,973,advantage kingsideAttack opening short,https://lichess.org/MYoQqL07#19,Scotch_Game Scotch_Game_Scotch_Gambit
 1S5LE,3k1b1r/Qppqnpp1/3p3p/5b2/5P2/1P2N3/1PP3PP/2B1R1K1 b - - 0 20,d7c6 e3f5 c6c5 a7c5,1582,354,100,3,equality middlegame short,https://lichess.org/ZsNYkvGd/black#40,
 1S75c,1r2k3/1p2q3/p7/4ppr1/4Q2p/7P/PP2NPP1/3R1RK1 w - - 0 24,e4h4 g5g2 g1g2 e7h4,816,78,100,98,advantage discoveredAttack middlegame short,https://lichess.org/uttpXpRz#47,

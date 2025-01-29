@@ -22,6 +22,7 @@ def main() = mainSuite("chess moves") {
     
     // Make castling move
     val newBoard = makeMove(board, "e1g1")
+
     
     assertEqual(
       list::get(list::get(newBoard.cells, 7), 6), 
@@ -33,9 +34,10 @@ def main() = mainSuite("chess moves") {
     )
   }
   test("promotion"){
-    val initialFen = "8/p7/8/8/8/8/8/8 w a7a8 - 0 1"
+    val initialFen = "8/P7/8/8/8/8/8/8 w a7a8 - 0 1"
     val board = fenToBoard(initialFen)
     val newBoard = makeMove(board, "a7a8")
+
     assertEqual(
       list::get(list::get(newBoard.cells, 0), 0), 
       Some(Queen(true))

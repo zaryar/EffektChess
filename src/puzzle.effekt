@@ -26,7 +26,6 @@ effect PuzzleLost(correctMove: String): Unit
 def separator() = "----------------------------------------"
 
 def isValidMove(move: String): Bool /  InvalidMove = {
-
   val validCols = "abcdefgh"
   val validRows = "12345678"
   with on[OutOfBounds].panic; //fine because we checked the length
@@ -50,8 +49,8 @@ def isValidMove(move: String): Bool /  InvalidMove = {
 
 def playPuzzle(puzzle: Puzzle): Unit / {PuzzleLost, PuzzleWon}  = {
   def toMove(white: Bool): String = {
-    if (white) bold ++ "(White)" ++ reset 
-    else bold ++ "(Black)" ++ reset
+    if (white) bold ++ "(Blue)" ++ reset 
+    else bold ++ "(Red)" ++ reset
   }
 
   var board = puzzle.board
