@@ -1,7 +1,6 @@
 module puzzle
 
 import src/board
-import src/pieces
 import src/display
 import src/utils
 

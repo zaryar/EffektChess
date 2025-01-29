@@ -278,7 +278,6 @@ PuzzleId,FEN,Moves,Rating,RatingDeviation,Popularity,NbPlays,Themes,GameUrl,Open
 0QPdc,5rk1/p4Rpp/3p4/3B2b1/2Pp4/3P2P1/Pqr2P2/R3QK2 b - - 0 23,f8f7 e1e8,663,82,98,1024,mate mateIn1 middlegame oneMove pin,https://lichess.org/ZStS22Q9/black#46,
 0QT1z,r3Q1k1/1pp2ppp/1pn3q1/1B6/8/2P3N1/bP3PPP/R3R1K1 b - - 0 18,a8e8 e1e8,400,100,100,175,backRankMate mate mateIn1 middlegame oneMove,https://lichess.org/yGiurrVZ/black#36,Scotch_Game Scotch_Game_Classical_Variation
 0QUrI,5Q2/7p/2q2pp1/7k/p4PP1/7P/1P5K/8 b - - 0 37,h5h4 f8h6,631,118,100,31,endgame mate mateIn1 oneMove queenEndgame,https://lichess.org/EOVKret5/black#74,
-0Qdft,6r1/ppp2k2/2p2p2/4pR1P/3PPb2/8/PPP1N3/1K6 w - - 1 29,e2f4 g8g1,715,77,97,370,backRankMate endgame mate mateIn1 oneMove,https://lichess.org/X0w7aZNu#57,
 0QhWr,6rk/pp6/7p/7b/8/P2P1q2/2P2PQP/5R1K w - - 2 42,g2f3 h5f3,630,78,100,378,endgame mate mateIn1 oneMove,https://lichess.org/UYnaXHlB#83,
 0Qhfz,r3k2r/pp1n1ppp/2pBp3/3B2Q1/3q4/P5PP/2P2P2/R4RK1 b kq - 0 17,c6d5 g5e7,766,78,97,322,mate mateIn1 middlegame oneMove,https://lichess.org/TU4GDhnA/black#34,Scandinavian_Defense Scandinavian_Defense_Schiller-Pytel_Variation
 0Qhhk,8/1p6/p1p3k1/3p2P1/PP2nq2/3Q3P/2R5/5K2 w - - 1 33,c2f2 f4f2,718,79,100,346,endgame mate mateIn1 oneMove,https://lichess.org/15r1ny7f#65,
