@@ -4,6 +4,20 @@ import src/board
 import src/pieces
 import src/utils
 
+def numToCol(num: Int): String = {
+  num match {
+    case 0 => "a"
+    case 1 => "b" 
+    case 2 => "c"
+    case 3 => "d"
+    case 4 => "e"
+    case 5 => "f"
+    case 6 => "g"
+    case 7 => "h"
+    case _ => "x" 
+  }
+}
+
 def printBoard(board: Board, whiteView: Bool, sourceTile: String): Unit = {
   var linebreak = 0
   var isWhite = false
