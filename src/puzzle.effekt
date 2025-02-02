@@ -74,15 +74,16 @@ def playPuzzle(puzzle: Puzzle): Unit / {PuzzleLost, PuzzleWon}  = {
         println(bold ++ "Move " ++ show(turn + 1) ++ reset ++ " - Your Turn " ++ toMove(whiteToMove))
         with console;
         do writeLine(green ++ "Enter move: " ++ reset)
-        val input = do readLine()      
+        var input = do readLine()      
 
         if (not(isValidMove(input))){
           do writeLine(green ++ "Try again: " ++ reset)
-          val input = do readLine()  
+          input = do readLine()  
           ()
         }
-        if (input == move || input == "a1a1") {
-          println(green ++ "little cheater" ++ reset)
+        println("input: " ++ input ++ " move: " ++ move) 
+        if (input == move) {
+          println(green ++ "✓ Correct!" ++ reset)
           board = makeMove(board, move)
         }
         else {
@@ -94,7 +95,7 @@ def playPuzzle(puzzle: Puzzle): Unit / {PuzzleLost, PuzzleWon}  = {
           with on[OutOfBounds].panic  //is fine because moves are always 4 characters long
           println(bold ++ "Hint: Move piece at " ++ green ++ move.substring(0, 2) ++ reset)
           do writeLine(green ++ "Enter move: " ++ reset)
-          val input = do readLine()       
+          input = do readLine()       
 
           if (input == move) {
             println(green ++ "✓ Correct!" ++ reset)
