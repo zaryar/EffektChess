@@ -25,6 +25,9 @@ A chess puzzle trainer implemented in Effekt, using algebraic effects for error 
 - Piece definitions and properties
 - Move pattern validation
 
+### Simple UML how they interact:
+![alt text](img/EffektChess.drawio.png)
+
 ## Support Modules
 
 ### FEN Parser (`src/fen.effekt`)
