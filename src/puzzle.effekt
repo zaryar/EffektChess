@@ -81,7 +81,6 @@ def playPuzzle(puzzle: Puzzle): Unit / {PuzzleLost, PuzzleWon}  = {
           input = do readLine()  
           ()
         }
-        println("input: " ++ input ++ " move: " ++ move) 
         if (input == move) {
           println(green ++ "✓ Correct!" ++ reset)
           board = makeMove(board, move)

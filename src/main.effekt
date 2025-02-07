@@ -12,6 +12,7 @@ import src/progress
 val red = "\u001b[31m"
 val green = "\u001b[32m"
 val reset = "\u001b[0m"
+val bold = "\u001b[1m"
 
 
 

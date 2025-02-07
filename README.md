@@ -55,7 +55,7 @@ A chess puzzle trainer implemented in [Effekt](https://github.com/effekt-lang/ef
 effekt src/main.effekt
 
 # Run tests
-effekt src/test.effek
+effekt src/test.effekt
 ```
 
 ## Features
@@ -74,3 +74,8 @@ effekt src/test.effek
   - Invalid puzzle handling
   - Move validation
   - Game state management
+
+## Acknowledgements
+Chess puzzles are from [lichess.org](https://database.lichess.org/#puzzles) and are available under the Creative Commons CC0 license.
+
+

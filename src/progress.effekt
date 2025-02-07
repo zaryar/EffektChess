@@ -80,9 +80,9 @@ def readProgress(): Progress = {
   val lines = content.split("\n")
   with on[WrongFormat].panic;
   Progress(
-    string::toInt(show(lines.get(0))), 
-    string::toInt(show(lines.get(1))), 
-    string::toInt(show(lines.get(2))) 
+    lines.get(0).toInt, 
+    lines.get(1).toInt, 
+    lines.get(2).toInt
   )
 }
 
