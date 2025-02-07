@@ -11,11 +11,18 @@ import src/utils
 // But we only really need FEN and MOVES for the current implementation
 
 
-
+// Effect for handling invalid puzzle scenarios (file access, format issues)
 effect InvalidPuzzle(msg: String): (String, List[String])
 
+// Fallback puzzle in case of errors
 val defaultPuzzle = ("8/3N2k1/5b2/5R2/r5KP/8/8/8 w - - 3 48", ["g4h5", "a4h4"])
 
+
+// Gets a random puzzle from the CSV file
+// Parameters:
+//   path: Path to puzzle CSV file
+//   deletePuzzle: If true, removes selected puzzle from file to avoid repetition
+// Returns: Tuple of (FEN position, List of solution moves)
 def getRandomPuzzle(path: String, deletePuzzle: Bool): (String, List[String]) / InvalidPuzzle = {
 
   with on[IOError].default { 
@@ -27,7 +34,7 @@ def getRandomPuzzle(path: String, deletePuzzle: Bool): (String, List[String]) / 
     defaultPuzzle
   }
 
-
+  // reading file
   val fileContent = readFile(path)
   val lines = fileContent.split("\n")
   
@@ -36,6 +43,7 @@ def getRandomPuzzle(path: String, deletePuzzle: Bool): (String, List[String]) / 
   val puzzles = lines.drop(1)
   val randomIndex = floor(random() * puzzles.size.toDouble) 
   
+  // select random puzzle
   val selectedLine = puzzles.get(randomIndex)
 
   def buildNewList(index: Int, acc: List[String]): List[String] = {
@@ -48,12 +56,14 @@ def getRandomPuzzle(path: String, deletePuzzle: Bool): (String, List[String]) / 
     }
   }
 
+  // setting in main menu - deletes the played puzzle if checkted
   if (deletePuzzle) {
     val remainingPuzzles = buildNewList(0, Nil())
     val newContent = header ++ "\n" ++ remainingPuzzles.join("\n")
     writeFile(path, newContent)
   }
 
+  // parsing selected puzzle
   val fields = selectedLine.split(",")
   val movesString = fields.get(2)
   val movesArray = movesString.split(" ") 
